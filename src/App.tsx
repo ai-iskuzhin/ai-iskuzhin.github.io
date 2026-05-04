@@ -5,37 +5,117 @@ import './App.css'
 type ThemeMode = 'light' | 'dark' | 'system'
 
 const navItems = [
-  { href: '#about', label: 'About' },
-  { href: '#experience', label: 'Experience' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#links', label: 'Links' },
-  { href: '#contact', label: 'Contact' },
+  { href: '#about', label: 'Обо мне' },
+  { href: '#experience', label: 'Опыт' },
+  { href: '#projects', label: 'Проекты' },
+  { href: '#links', label: 'Ссылки' },
+  { href: '#contact', label: 'Контакты' },
 ]
 
 const experience = [
   {
-    period: '2024 - Present',
-    role: 'AI & Front-End Engineer',
-    company: 'Independent Projects',
+    period: 'Январь 2023 - Декабрь 2024',
+    duration: '2 года',
+    role: 'Ведущий разработчик .NET',
+    company: 'Башкирский регистр социальных карт, ОАО',
+    focus: 'Социальная карта Башкортостана',
     summary:
-      'Building practical AI-assisted products, portfolio systems, and production-ready web interfaces with a focus on clarity, performance, and maintainable architecture.',
-    skills: ['React', 'TypeScript', 'Vite', 'AI tooling', 'UI systems'],
+      'Отвечал за развитие сервисов проекта «Социальная карта Башкортостана»: поддерживал legacy-контур, проектировал новые интеграции, развивал backend на .NET 5/6 и участвовал в инфраструктурной модернизации.',
+    highlights: [
+      'Спроектировал и реализовал сервис интеграции с банком Совкомбанк.',
+      'Участвовал в переходе от монолита к распределенному монолиту и сервисной архитектуре.',
+      'Автоматизировал бизнес-процессы и внедрял CI/CD для стабильного развертывания на разных средах.',
+      'Участвовал в миграциях MS SQL -> PostgreSQL и Windows Server/IIS -> Linux/systemd.',
+      'Проектировал внутренние контракты и коммуникацию между сервисами через gRPC и HTTP.',
+    ],
+    skills: [
+      'jQuery',
+      'ASP.NET MVC',
+      '.NET Framework',
+      '.NET 5/6',
+      'MSSQL',
+      'PostgreSQL',
+      'IIS',
+      'Linux',
+      'YARP',
+      'nginx',
+      'Redis',
+      'gRPC',
+    ],
   },
   {
-    period: '2022 - 2024',
-    role: 'Software Developer',
-    company: 'Product Engineering',
+    period: 'Август 2024 - Октябрь 2024',
+    duration: '3 месяца',
+    role: 'C-разработчик',
+    company: 'Башкирский регистр социальных карт, ОАО',
+    focus: 'UNIX POS-терминалы',
     summary:
-      'Delivered responsive applications, refined component patterns, and turned ambiguous product ideas into usable interfaces with reliable frontend foundations.',
-    skills: ['JavaScript', 'APIs', 'Accessibility', 'Design systems'],
+      'Разработал кассовое ПО для UNIX POS-терминала NEW8210: сценарий оплаты школьного буфета по MIFARE-картам с интеграцией во внешний буфетный API.',
+    highlights: [
+      'Работал с периферией терминала через SDK производителя.',
+      'Разработал SSL-клиент для взаимодействия с HTTP API.',
+      'Реализовал интерфейс на DirectFB и обработку ввода с клавиатуры терминала.',
+    ],
+    skills: ['C', 'UNIX', 'HTTP JSON', 'SSL', 'DirectFB', 'MIFARE', 'POS SDK'],
   },
   {
-    period: 'Earlier',
-    role: 'Technical Problem Solver',
-    company: 'Learning & Client Work',
+    period: 'Июнь 2022 - Февраль 2023',
+    duration: '9 месяцев',
+    role: '.NET-разработчик',
+    company: 'ООО Фулсофт',
+    focus: 'Payment Gateway',
     summary:
-      'Developed a broad engineering base across web fundamentals, automation, debugging, and project delivery.',
-    skills: ['HTML', 'CSS', 'Git', 'Automation'],
+      'Разрабатывал платежный шлюз с унифицированным API для предпроцессинга платежей, биллинга и интеграций с эквайрингом и отраслевыми системами.',
+    highlights: [
+      'Интегрировал Тинькофф, Qiwi, ГПБ и биллинг-системы ЖКХ, транспорта и других категорий.',
+      'Разработал сервис постпроцессинга платежей на Hangfire с обработкой результата оплаты по категории услуги.',
+    ],
+    skills: ['Linux', '.NET 6', 'MediatR', 'Hangfire', 'PostgreSQL', 'EF Core', 'Redis', 'nginx', 'systemd'],
+  },
+  {
+    period: 'Декабрь 2022 - Январь 2023',
+    duration: '2 месяца',
+    role: 'Ведущий разработчик .NET',
+    company: 'Башкирский регистр социальных карт, ОАО',
+    focus: 'ГИС АИС «Образование»',
+    summary:
+      'Временно исполнял обязанности тимлида команды из 4 .NET-разработчиков на проекте ГИС АИС «Образование» и электронного дневника Elschool.',
+    highlights: [
+      'Спроектировал и разработал единый сервис авторизации SSO по OAuth2 с обратной совместимостью со старыми системами.',
+      'Менторил развертывание Moodle и разработку сервисов «Башкирская цифровая школа», «Портфолио ученика» и интеграции портфолио.',
+      'Внедрил CI/CD с использованием nginx, systemd и rsync для развертывания сервисов в рамках одного домена.',
+      'Внедрял MediatR и FluentValidation в процессы разработки.',
+    ],
+    skills: ['.NET 6', 'OAuth2', 'MediatR', 'FluentValidation', 'Linux', 'nginx', 'systemd', 'PostgreSQL', 'CI/CD'],
+  },
+  {
+    period: 'Апрель 2022 - Январь 2023',
+    duration: '10 месяцев',
+    role: 'Программист .NET',
+    company: 'Башкирский регистр социальных карт, ОАО',
+    focus: 'Карта жителя «Алга»',
+    summary:
+      'Сопровождал системы проекта «Социальная карта Башкортостана» и карты жителя «Алга»: анализировал доработки, писал код, тестировал, документировал, готовил отчеты и участвовал в развертывании.',
+    highlights: [
+      'Участвовал в полном цикле разработки проекта пополнения Единого социального проездного билета.',
+      'Разработал Windows Forms-плагин для интеграции пополнения ЕСПБ в модульной платформе ЕАС Почты России.',
+      'Участвовал в миграции сервиса WCF на .NET 6.',
+    ],
+    skills: ['ASP.NET MVC 3', '.NET Framework 4.5', 'jQuery', 'Razor', 'MS SQL Server', 'IIS', 'SOAP', 'WCF', 'Git'],
+  },
+  {
+    period: 'Январь 2022 - Январь 2023',
+    duration: '1 год',
+    role: 'Самозанятый разработчик',
+    company: 'Фриланс',
+    focus: 'FAForever Launcher',
+    summary:
+      'Разрабатывал десктопный лаунчер для игрового сообщества FAForever: клиентские сценарии в реальном времени, сетевые интеграции, визуализация данных и удобный desktop UX.',
+    highlights: [
+      'Работал с IRC, TCP, REST API и WS Streaming для клиентских сценариев в реальном времени.',
+      'Разрабатывал интерфейс и логику десктопного приложения на WPF/.NET.',
+    ],
+    skills: ['WPF', '.NET', 'IRC', 'TCP', 'API', 'WS Streaming', 'Data visualization'],
   },
 ]
 
@@ -43,22 +123,22 @@ const projects = [
   {
     title: 'AI Personal Website',
     description:
-      'A refined portfolio built to present experience, selected work, contact paths, and professional links in one focused destination.',
+      'Персональный сайт-портфолио для презентации опыта, проектов, профессиональных ссылок и контактов.',
     stack: ['React', 'TypeScript', 'GitHub Pages'],
     href: 'https://github.com/ai-iskuzhin',
   },
   {
-    title: 'Project Operating System',
+    title: 'Payment Gateway',
     description:
-      'A reusable structure for organizing project briefs, delivery notes, links, and engineering decisions across ongoing work.',
-    stack: ['Documentation', 'Workflow', 'Automation'],
+      'Платежный шлюз с унифицированным API, постпроцессингом оплат и интеграциями с эквайрингом и биллинг-системами.',
+    stack: ['.NET 6', 'Hangfire', 'PostgreSQL', 'Redis'],
     href: 'https://github.com/ai-iskuzhin',
   },
   {
-    title: 'Interface Experiments',
+    title: 'FAForever Launcher',
     description:
-      'A collection of frontend experiments exploring motion, layout, accessible interaction states, and polished responsive behavior.',
-    stack: ['CSS', 'React', 'UX'],
+      'Десктопный лаунчер для игрового сообщества с real-time обменом данными, API-интеграциями и визуализацией.',
+    stack: ['WPF', '.NET', 'IRC', 'TCP', 'WS Streaming'],
     href: 'https://github.com/ai-iskuzhin',
   },
 ]
@@ -67,15 +147,15 @@ const links = [
   { label: 'GitHub', href: 'https://github.com/ai-iskuzhin' },
   { label: 'Telegram', href: 'https://t.me/mrx_eternal' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/' },
-  { label: 'Resume', href: '/resume.pdf' },
+  { label: 'Резюме', href: '/resume.pdf' },
   { label: 'Email', href: 'mailto:hello@example.com' },
-  { label: 'Phone', href: 'tel:+79279383562' },
+  { label: 'Телефон', href: 'tel:+79279383562' },
 ]
 
 const themeModes: Array<{ label: string; mode: ThemeMode }> = [
-  { label: 'Light', mode: 'light' },
-  { label: 'Dark', mode: 'dark' },
-  { label: 'System', mode: 'system' },
+  { label: 'Светлая', mode: 'light' },
+  { label: 'Темная', mode: 'dark' },
+  { label: 'Системная', mode: 'system' },
 ]
 
 function GitHubIcon() {
@@ -195,20 +275,20 @@ function App() {
 
   return (
     <main className="site-shell">
-      <aside className="intro-panel" aria-label="Profile introduction">
+      <aside className="intro-panel" aria-label="Краткая информация">
         <div className="profile-hero">
           <img className="profile-photo" src="/me.jpg" alt="Aigiz Iskuzhin" />
 
-          <div className="theme-switcher" aria-label="Color theme">
+          <div className="theme-switcher" aria-label="Цветовая тема">
             {themeModes.map((item) => (
               <button
                 type="button"
                 className={themeMode === item.mode ? 'active' : undefined}
                 key={item.mode}
                 onClick={() => setThemeMode(item.mode)}
-                aria-label={`${item.label} theme`}
+                aria-label={`${item.label} тема`}
                 aria-pressed={themeMode === item.mode}
-                title={`${item.label} theme`}
+                title={`${item.label} тема`}
               >
                 <ThemeIcon mode={item.mode} />
               </button>
@@ -216,20 +296,21 @@ function App() {
           </div>
 
           <div className="intro-copy">
-            <p className="eyebrow">Personal portfolio</p>
+            <p className="eyebrow">Персональное портфолио</p>
             <h3 id="top">Aigiz Iskuzhin</h3>
-            <h4>Software developer building focused web products and AI-assisted tools.</h4>
+            <h4>.NET-разработчик с 3 годами коммерческого опыта.</h4>
           </div>
         </div>
         <div>
             <p>
-              I turn complex ideas into clean, durable interfaces. This site collects
-              my experience, selected projects, professional links, and the best ways
-              to get in touch.
+              Разрабатываю и сопровождаю веб-сервисы, платежные интеграции,
+              внутренние API и инфраструктуру развертывания. Работал с legacy
+              системами, сервисной архитектурой, Linux, CI/CD и промышленными
+              интеграциями.
             </p>
         </div>
 
-        <nav className="section-nav" aria-label="Sections">
+        <nav className="section-nav" aria-label="Разделы">
           {navItems.map((item) => (
             <a
               className={activeSection === item.href ? 'active' : undefined}
@@ -243,7 +324,7 @@ function App() {
           ))}
         </nav>
 
-        <div className="social-row" aria-label="External links">
+        <div className="social-row" aria-label="Внешние ссылки">
           {links.slice(0, 3).map((link) => (
             <a
               className={link.label === 'GitHub' || link.label === 'Telegram' ? 'icon-link' : undefined}
@@ -261,46 +342,58 @@ function App() {
       </aside>
 
       <section className="content-panel">
-        <section className="hero-card" aria-label="Portfolio highlight">
+        <section className="hero-card" aria-label="Ключевой профиль">
           <div>
-            <p className="eyebrow">Available for selected opportunities</p>
+            <p className="eyebrow">Опыт работы: 3 года</p>
             <p>
-              Product-minded engineering, modern frontend development, and useful
-              AI workflows for teams that value execution quality.
+              Основной фокус: .NET backend, интеграции, платежные сервисы,
+              PostgreSQL, Linux-инфраструктура и надежная доставка изменений через CI/CD.
             </p>
           </div>
           <img src={heroImg} alt="" />
         </section>
 
         <section className="content-section" id="about">
-          <p className="section-kicker">About</p>
+          <p className="section-kicker">Обо мне</p>
           <div className="section-body">
             <p>
-              I care about the practical side of software: interfaces that are fast,
-              readable, accessible, and easy to evolve. My work sits between product
-              thinking and implementation, where the details of layout, interaction,
-              copy, and code quality all matter.
+              Я занимаюсь разработкой прикладных систем, где важны надежность,
+              понятная архитектура и аккуратная интеграция с внешними сервисами.
+              Есть опыт поддержки старых систем, постепенной миграции на современный
+              стек и внедрения процессов, которые ускоряют доставку изменений.
             </p>
             <p>
-              Recently I have been focused on React, TypeScript, AI-enabled workflows,
-              automation, and personal product experiments. I like projects where the
-              goal is not just to ship a screen, but to make the underlying system
-              simpler and stronger.
+              Сильнее всего мне интересны backend-разработка, платежные и социальные
+              сервисы, инфраструктура развертывания, автоматизация бизнес-процессов
+              и практичные инструменты для командной разработки.
             </p>
           </div>
         </section>
 
         <section className="content-section" id="experience">
-          <p className="section-kicker">Experience</p>
+          <p className="section-kicker">Опыт работы</p>
           <div className="timeline">
             {experience.map((item) => (
               <article className="timeline-item" key={`${item.period}-${item.role}`}>
-                <p className="period">{item.period}</p>
+                <div className="period-block">
+                  <p className="period">{item.period}</p>
+                  <span>{item.duration}</span>
+                </div>
                 <div>
-                  <h3>
-                    {item.role} <span>{item.company}</span>
-                  </h3>
+                  <div className="role-heading">
+                    <div>
+                      <p className="project-label">{item.focus}</p>
+                      <h3>
+                        {item.role} <span>{item.company}</span>
+                      </h3>
+                    </div>
+                  </div>
                   <p>{item.summary}</p>
+                  <ul className="highlight-list">
+                    {item.highlights.map((highlight) => (
+                      <li key={highlight}>{highlight}</li>
+                    ))}
+                  </ul>
                   <ul className="tag-list" aria-label={`${item.role} skills`}>
                     {item.skills.map((skill) => (
                       <li key={skill}>{skill}</li>
@@ -313,12 +406,12 @@ function App() {
         </section>
 
         <section className="content-section" id="projects">
-          <p className="section-kicker">Projects</p>
+          <p className="section-kicker">Проекты</p>
           <div className="project-list">
             {projects.map((project) => (
               <a className="project-card" href={project.href} key={project.title}>
                 <div>
-                  <p className="project-label">Selected project</p>
+                  <p className="project-label">Выбранный проект</p>
                   <h3>{project.title}</h3>
                   <p>{project.description}</p>
                 </div>
@@ -333,7 +426,7 @@ function App() {
         </section>
 
         <section className="content-section" id="links">
-          <p className="section-kicker">Links</p>
+          <p className="section-kicker">Ссылки</p>
           <div className="link-grid">
             {links.map((link) => (
               <a href={link.href} key={link.label} target="_blank" rel="noreferrer">
@@ -348,14 +441,14 @@ function App() {
         </section>
 
         <section className="contact-section" id="contact">
-          <p className="section-kicker">Contact</p>
-          <h2>Have a project, role, or collaboration in mind?</h2>
+          <p className="section-kicker">Контакты</p>
+          <h2>Есть проект, вакансия или идея для сотрудничества?</h2>
           <p>
-            Send a short note with the context, timeline, and links. I read every
-            message and prefer direct, concrete conversations.
+            Напишите коротко о задаче, сроках и контексте. Я предпочитаю прямую
+            коммуникацию и конкретные вводные.
           </p>
           <a className="primary-link" href="mailto:hello@example.com">
-            Say hello
+            Написать
           </a>
         </section>
       </section>
