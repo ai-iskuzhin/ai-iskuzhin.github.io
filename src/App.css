@@ -4,12 +4,12 @@
   gap: clamp(48px, 8vw, 112px);
   width: min(1180px, calc(100% - 48px));
   margin: 0 auto;
-  padding: 0 0 72px;
+  padding: clamp(32px, 5vw, 64px) 0 72px;
 }
 
 .intro-panel {
   position: sticky;
-  top: 0;
+  top: clamp(24px, 4vw, 48px);
   align-self: start;
   min-height: calc(100svh - 72px);
   display: flex;
@@ -385,7 +385,7 @@ h3 span {
     grid-template-columns: 1fr;
     gap: 56px;
     width: min(100% - 36px, 720px);
-    padding: 0 0 64px;
+    padding: 32px 0 64px;
   }
 
   .intro-panel {
