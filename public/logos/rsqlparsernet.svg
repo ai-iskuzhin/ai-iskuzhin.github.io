@@ -1,0 +1,25 @@
+<svg width="512" height="512" viewBox="0 0 240 240" preserveAspectRatio="xMidYMid meet" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>RsqlParserNet logo</title>
+  <desc>Rounded gradient badge with a query filter funnel and braces.</desc>
+  <defs>
+    <linearGradient id="rsql-bg" x1="0" y1="0" x2="240" y2="240" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F59E0B" />
+      <stop offset="0.55" stop-color="#EC6F2B" />
+      <stop offset="1" stop-color="#7C3AED" />
+    </linearGradient>
+    <linearGradient id="rsql-shine" x1="0" y1="0" x2="0" y2="240" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22" />
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="240" height="240" rx="56" fill="url(#rsql-bg)" />
+  <rect x="0" y="0" width="240" height="240" rx="56" fill="url(#rsql-shine)" />
+  <g fill="#ffffff">
+    <!-- query filter funnel -->
+    <path d="M70 76 H170 A6 6 0 0 1 174.6 85.8 L134 132 V168 A6 6 0 0 1 125.2 173.3 L110.8 165.3 A6 6 0 0 1 108 160 V132 L65.4 85.8 A6 6 0 0 1 70 76 Z" opacity="0.96" />
+  </g>
+  <g fill="#ffffff" opacity="0.9" font-family="'JetBrains Mono','SFMono-Regular',monospace" font-weight="700" font-size="34">
+    <text x="44" y="58">{</text>
+    <text x="180" y="58" text-anchor="end">}</text>
+  </g>
+</svg>

@@ -1,0 +1,56 @@
+import type { Lang } from '../content/types'
+import { ui, t } from '../i18n'
+import { socials, profile, prettyHref } from '../content/profile'
+import { librariesPath, blogPath, verificahubPath, homePath } from '../routes'
+import { Link } from '../router'
+import { SocialIcon } from './SocialIcon'
+
+export function Footer({ lang }: { lang: Lang }) {
+  const year = '2026'
+  return (
+    <footer className="site-footer">
+      <div className="site-footer__inner">
+        <div className="site-footer__brand">
+          <p className="site-footer__name">{profile.name[lang]}</p>
+          <p className="site-footer__role">{profile.role[lang]}</p>
+        </div>
+
+        <nav className="site-footer__links" aria-label="Footer">
+          <Link to={homePath(lang)}>{t(ui.nav.about, lang)}</Link>
+          <Link to={librariesPath(lang)}>{t(ui.nav.openSource, lang)}</Link>
+          <Link to={verificahubPath(lang)}>VerificaHub</Link>
+          <Link to={blogPath(lang)}>{t(ui.nav.blog, lang)}</Link>
+        </nav>
+
+        <div className="site-footer__social">
+          {socials
+            .filter((social) => /^https?:/.test(social.href))
+            .map((social) => (
+              <a
+                key={`${social.type}-${social.href}`}
+                className="tip"
+                data-tip={prettyHref(social.href)}
+                href={social.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`${social.label} — ${prettyHref(social.href)}`}
+              >
+                <SocialIcon type={social.type} />
+              </a>
+            ))}
+        </div>
+      </div>
+
+      <div className="site-footer__legal">
+        <span>© {year} {profile.name[lang]}. {t(ui.footer.rights, lang)}</span>
+      </div>
+
+      {lang === 'ru' ? (
+        <p className="site-footer__entity">
+          ИП Айгиз Искужин · ИНН 024803896842 · ОГРНИП 326028000044859 · ОКВЭД 62.01 — Разработка
+          компьютерного программного обеспечения
+        </p>
+      ) : null}
+    </footer>
+  )
+}
