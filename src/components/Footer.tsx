@@ -1,7 +1,7 @@
 import type { Lang } from '../content/types'
 import { ui, t } from '../i18n'
 import { socials, profile, prettyHref } from '../content/profile'
-import { librariesPath, blogPath, verificahubPath, homePath } from '../routes'
+import { librariesPath, verificahubPath, homePath } from '../routes'
 import { Link } from '../router'
 import { SocialIcon } from './SocialIcon'
 
@@ -19,7 +19,6 @@ export function Footer({ lang }: { lang: Lang }) {
           <Link to={homePath(lang)}>{t(ui.nav.about, lang)}</Link>
           <Link to={librariesPath(lang)}>{t(ui.nav.openSource, lang)}</Link>
           <Link to={verificahubPath(lang)}>VerificaHub</Link>
-          <Link to={blogPath(lang)}>{t(ui.nav.blog, lang)}</Link>
         </nav>
 
         <div className="site-footer__social">

@@ -7,7 +7,6 @@ import {
   pathForRoute,
   homePath,
   librariesPath,
-  blogPath,
 } from '../routes'
 import { Link, useRouter } from '../router'
 import { useTheme, type ThemeMode } from '../useTheme'
@@ -31,7 +30,7 @@ export function Header({ route }: { route: RouteMatch }) {
     { to: `${homePath(lang)}#about`, label: ui.nav.about },
     { to: librariesPath(lang), label: ui.nav.openSource },
     { to: `${homePath(lang)}#experience`, label: ui.nav.experience },
-    { to: blogPath(lang), label: ui.nav.blog },
+    { to: `${homePath(lang)}#projects`, label: ui.nav.projects },
     { to: `${homePath(lang)}#contact`, label: ui.nav.contact },
   ]
 

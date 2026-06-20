@@ -48,7 +48,7 @@ function renderItem(item: Item, key: string, lang: Lang): ReactNode {
     return (
       <Link
         className="ticker__chip"
-        data-tip={`${t({ ru: 'Открыть', en: 'Open' }, lang)} ${item.label} →`}
+        title={`${t({ ru: 'Открыть', en: 'Open' }, lang)} ${item.label}`}
         to={item.to}
         tabIndex={-1}
         key={key}
@@ -61,7 +61,7 @@ function renderItem(item: Item, key: string, lang: Lang): ReactNode {
   return (
     <a
       className="ticker__chip"
-      data-tip={prettyHref(item.href)}
+      title={prettyHref(item.href)}
       href={item.href}
       target="_blank"
       rel="noreferrer"

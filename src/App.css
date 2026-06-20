@@ -605,24 +605,30 @@ main#main {
   flex: 1;
 }
 
-.library-card__badges {
+.library-card__footer {
   position: relative;
   z-index: 1;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 10px;
   margin-top: 18px;
 }
 
+.library-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
 .library-card__more {
-  position: relative;
-  z-index: 1;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  margin-top: 18px;
+  gap: 6px;
   font-weight: 600;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
+  white-space: nowrap;
   color: var(--accent);
   transition: gap 0.2s ease;
 }
@@ -1222,50 +1228,38 @@ main#main {
    ============================================================ */
 .library-hero {
   position: relative;
-  overflow: hidden;
-  padding: clamp(28px, 5vw, 44px);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--line);
-  background: var(--surface);
-  backdrop-filter: blur(10px);
-  box-shadow: var(--shadow-sm);
-  margin-bottom: 14px;
+  padding: 8px 0 0;
+  margin-bottom: 6px;
 }
 
-.library-hero__glow {
-  position: absolute;
-  inset: -50% 40% 50% -10%;
-  background: radial-gradient(circle at top left, color-mix(in srgb, var(--accent-from) 55%, transparent), transparent 70%);
-  opacity: 0.4;
-  pointer-events: none;
-}
-
-.library-hero > * {
-  position: relative;
-  z-index: 1;
+.library-hero__heading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
 }
 
 .library-hero__category {
-  display: inline-block;
-  font-size: 0.76rem;
+  align-self: flex-start;
+  font-size: 0.62rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #fff;
-  padding: 5px 12px;
+  padding: 3px 9px;
   border-radius: 999px;
   background: linear-gradient(120deg, var(--accent-from), var(--accent-to));
 }
 
 .library-hero h1 {
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(1.9rem, 5vw, 2.8rem);
   font-weight: 800;
-  margin-top: 14px;
+  margin-top: 0;
 }
 
 .library-hero__tagline {
-  margin-top: 8px;
-  font-size: 1.1rem;
+  margin-top: 0;
+  font-size: 1.08rem;
   font-weight: 500;
   color: var(--ink);
 }
@@ -1337,10 +1331,7 @@ main#main {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  padding: 14px 16px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--line);
-  background: var(--surface);
+  padding: 5px 0;
   color: var(--ink);
   font-weight: 500;
   font-size: 0.95rem;
@@ -1774,9 +1765,9 @@ main#main {
 .ticker {
   position: relative;
   z-index: 40;
-  /* Clip horizontally (marquee) while letting tooltips escape vertically. */
-  overflow-x: clip;
-  overflow-y: visible;
+  /* Clip both axes — robust across browsers (Safari mishandles mixed clip/visible). */
+  overflow: hidden;
+  max-width: 100%;
   border-bottom: 1px solid var(--line);
   background: color-mix(in srgb, var(--bg) 50%, transparent);
 }
@@ -2007,55 +1998,8 @@ main#main {
   transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
 }
 
-/* Tooltip drops downward (away from the sticky header). */
-.ticker__chip[data-tip]::after {
-  content: attr(data-tip);
-  position: absolute;
-  left: 50%;
-  top: calc(100% + 11px);
-  transform: translateX(-50%) translateY(-4px);
-  padding: 6px 11px;
-  border-radius: 9px;
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  font-weight: 500;
-  color: #fff;
-  background: #0c1322;
-  border: 1px solid rgba(148, 163, 200, 0.28);
-  box-shadow: 0 14px 30px rgba(2, 6, 23, 0.5);
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.18s ease, transform 0.18s ease;
-  z-index: 60;
-}
-
-.ticker__chip[data-tip]::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: calc(100% + 6px);
-  transform: translateX(-50%) translateY(-4px) rotate(45deg);
-  width: 9px;
-  height: 9px;
-  background: #0c1322;
-  border-left: 1px solid rgba(148, 163, 200, 0.28);
-  border-top: 1px solid rgba(148, 163, 200, 0.28);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.18s ease, transform 0.18s ease;
-  z-index: 60;
-}
-
-.ticker__chip:hover::after,
-.ticker__chip:hover::before {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-.ticker__chip:hover::before {
-  transform: translateX(-50%) translateY(0) rotate(45deg);
-}
+/* Ticker chips use a native title tooltip (custom one needs overflow that
+   conflicts with the marquee clip — and broke layout in Safari). */
 
 .ticker__chip img {
   width: 20px;
@@ -2315,9 +2259,19 @@ main#main {
     justify-content: center;
   }
 
+  /* Full-bleed, stretch-to-content README on phones (no inner scroll window). */
+  .readme-details {
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    margin-left: calc(-1 * clamp(20px, 5vw, 40px));
+    margin-right: calc(-1 * clamp(20px, 5vw, 40px));
+  }
+
   .readme {
-    padding: 4px 14px 18px;
-    max-height: 460px;
+    max-height: none;
+    overflow: visible;
+    padding: 4px 16px 18px;
   }
 
   .readme-details > summary {
@@ -2328,12 +2282,6 @@ main#main {
 
   .flagship-card__more {
     align-self: flex-start;
-  }
-
-  .ticker__chip[data-tip]::after {
-    max-width: 70vw;
-    white-space: normal;
-    text-align: center;
   }
 }
 

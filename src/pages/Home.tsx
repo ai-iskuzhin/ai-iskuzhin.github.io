@@ -2,8 +2,7 @@ import type { Lang } from '../content/types'
 import { ui, t } from '../i18n'
 import { profile, experience, projects, socials, contactEmail, githubUser, prettyHref } from '../content/profile'
 import { libraries } from '../content/libraries'
-import { posts } from '../content/posts'
-import { librariesPath, verificahubPath, blogPath, postPath } from '../routes'
+import { librariesPath, verificahubPath } from '../routes'
 import { Link } from '../router'
 import { LibraryCard } from '../components/LibraryCard'
 import { SocialIcon } from '../components/SocialIcon'
@@ -27,15 +26,6 @@ const phrases: Record<Lang, string[]> = {
     'I build open-source .NET SDKs for fintech',
     'APIs that verify, charge and scale',
   ],
-}
-
-function formatDate(date: string, lang: Lang): string {
-  const [y, m, d] = date.split('-')
-  const months =
-    lang === 'ru'
-      ? ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек']
-      : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-  return lang === 'ru' ? `${Number(d)} ${months[Number(m) - 1]} ${y}` : `${months[Number(m) - 1]} ${Number(d)}, ${y}`
 }
 
 export function Home({ lang }: { lang: Lang }) {
@@ -258,29 +248,6 @@ export function Home({ lang }: { lang: Lang }) {
             </article>
           ))}
         </div>
-      </section>
-
-      <section className="section" id="blog">
-        <div className="section__head">
-          <p className="section__kicker">{t(ui.sections.blog, lang)}</p>
-        </div>
-        <div className="post-list">
-          {posts.map((post) => (
-            <Link to={postPath(lang, post.slug)} className="post-row" key={post.slug}>
-              <div>
-                <h3>{post.title[lang]}</h3>
-                <p>{post.excerpt[lang]}</p>
-              </div>
-              <span className="post-row__meta">
-                {formatDate(post.date, lang)} · {post.readingMinutes} {t(ui.blogMeta.readingTime, lang)}
-              </span>
-            </Link>
-          ))}
-        </div>
-        <Link to={blogPath(lang)} className="section__cta">
-          {t(ui.blogMeta.all, lang)}
-          <ArrowIcon />
-        </Link>
       </section>
 
       <section className="section" id="github">

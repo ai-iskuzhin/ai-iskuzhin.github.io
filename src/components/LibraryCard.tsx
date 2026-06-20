@@ -36,14 +36,16 @@ export function LibraryCard({ library, lang }: LibraryCardProps) {
         </div>
       </div>
       <p className="library-card__summary">{t(library.summary, lang)}</p>
-      <div className="library-card__badges">
-        <NugetBadge pkg={library.nuget} kind="version" />
-        <NugetBadge pkg={library.nuget} kind="downloads" />
+      <div className="library-card__footer">
+        <div className="library-card__badges">
+          <NugetBadge pkg={library.nuget} kind="version" />
+          <NugetBadge pkg={library.nuget} kind="downloads" />
+        </div>
+        <span className="library-card__more">
+          {t({ ru: 'Детали', en: 'Details' }, lang)}
+          <ArrowIcon />
+        </span>
       </div>
-      <span className="library-card__more">
-        {t({ ru: 'Подробнее', en: 'Details' }, lang)}
-        <ArrowIcon />
-      </span>
     </Link>
   )
 }

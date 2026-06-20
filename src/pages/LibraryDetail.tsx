@@ -30,7 +30,6 @@ export function LibraryDetail({ lang, slug }: { lang: Lang; slug: string }) {
       </nav>
 
       <header className="library-hero">
-        <div className="library-hero__glow" aria-hidden="true" />
         <div className="library-hero__top">
           <img
             className="library-hero__logo"
@@ -39,10 +38,12 @@ export function LibraryDetail({ lang, slug }: { lang: Lang; slug: string }) {
             width={72}
             height={72}
           />
-          <span className="library-hero__category">{t(library.category, lang)}</span>
+          <div className="library-hero__heading">
+            <span className="library-hero__category">{t(library.category, lang)}</span>
+            <h1>{library.name}</h1>
+            <p className="library-hero__tagline">{t(library.tagline, lang)}</p>
+          </div>
         </div>
-        <h1>{library.name}</h1>
-        <p className="library-hero__tagline">{t(library.tagline, lang)}</p>
         <p className="library-hero__summary">{t(library.summary, lang)}</p>
 
         <div className="library-hero__badges">
