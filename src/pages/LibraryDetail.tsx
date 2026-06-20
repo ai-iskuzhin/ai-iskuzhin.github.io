@@ -5,7 +5,6 @@ import { getLibrary } from '../content/libraries'
 import { librariesPath } from '../routes'
 import { Link } from '../router'
 import { NotFound } from './NotFound'
-import { CodeBlock } from '../components/CodeBlock'
 import { NugetBadge } from '../components/NugetBadge'
 import { ReadmeViewer } from '../components/ReadmeViewer'
 import { GitHubIcon, NuGetIcon, ExternalIcon, ArrowIcon, CheckIcon } from '../components/Icons'
@@ -44,7 +43,6 @@ export function LibraryDetail({ lang, slug }: { lang: Lang; slug: string }) {
             <p className="library-hero__tagline">{t(library.tagline, lang)}</p>
           </div>
         </div>
-        <p className="library-hero__summary">{t(library.summary, lang)}</p>
 
         <div className="library-hero__badges">
           <NugetBadge pkg={library.nuget} kind="version" />
@@ -78,16 +76,6 @@ export function LibraryDetail({ lang, slug }: { lang: Lang; slug: string }) {
           ) : null}
         </div>
       </header>
-
-      <section className="library-section">
-        <h2>{t(ui.library.install, lang)}</h2>
-        <CodeBlock code={library.install} language="bash" lang={lang} />
-      </section>
-
-      <section className="library-section">
-        <h2>{t(ui.library.quickstart, lang)}</h2>
-        <CodeBlock code={library.quickstart.code} language={library.quickstart.language} lang={lang} />
-      </section>
 
       <section className="library-section">
         <h2>{t(ui.library.features, lang)}</h2>

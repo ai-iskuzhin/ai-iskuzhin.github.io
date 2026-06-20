@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { Lang } from '../content/types'
+import { profile } from '../content/profile'
 import { ui, t } from '../i18n'
 import {
   type RouteMatch,
@@ -43,7 +44,7 @@ export function Header({ route }: { route: RouteMatch }) {
     <header className="site-header">
       <div className="site-header__inner">
         <Link to={homePath(lang)} className="brand" onClick={() => setOpen(false)}>
-          <span className="brand__mark">AI</span>
+          <img className="brand__photo" src="/me.jpg" alt={profile.name[lang]} width={34} height={34} />
           <span className="brand__name">iskuzhin.dev</span>
         </Link>
 

@@ -171,18 +171,13 @@ main#main {
   color: var(--ink);
 }
 
-.brand__mark {
-  display: grid;
-  place-items: center;
+.brand__photo {
   width: 34px;
   height: 34px;
-  border-radius: 10px;
-  font-size: 0.85rem;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  color: #fff;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  box-shadow: 0 8px 18px var(--accent-ring);
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--line-strong);
+  box-shadow: 0 6px 16px rgba(15, 30, 70, 0.18);
 }
 
 .brand__name {
@@ -312,6 +307,9 @@ main#main {
 .hero {
   position: relative;
   overflow: hidden;
+  /* contain:paint forces clipping of composited children (blurred orbs),
+     which Safari otherwise lets bleed past the edge and widen the page. */
+  contain: paint;
   max-width: var(--maxw);
   margin: 0 auto;
   padding: clamp(48px, 8vw, 96px) clamp(20px, 5vw, 40px) clamp(36px, 5vw, 64px);
@@ -362,6 +360,8 @@ main#main {
   font-size: clamp(1.1rem, 2.4vw, 1.45rem);
   font-weight: 600;
   color: var(--ink);
+  /* Reserve space so the typewriter doesn't push the layout as it types. */
+  min-height: 1.7em;
 }
 
 .hero__tagline {
@@ -1765,8 +1765,10 @@ main#main {
 .ticker {
   position: relative;
   z-index: 40;
-  /* Clip both axes — robust across browsers (Safari mishandles mixed clip/visible). */
+  /* overflow:hidden + contain:paint so the composited marquee track is clipped
+     even in Safari (overflow alone doesn't clip a translate3d/will-change layer). */
   overflow: hidden;
+  contain: paint;
   max-width: 100%;
   border-bottom: 1px solid var(--line);
   background: color-mix(in srgb, var(--bg) 50%, transparent);
@@ -1884,10 +1886,6 @@ main#main {
    ============================================================ */
 .typewriter {
   display: inline;
-}
-
-.hero__role {
-  min-height: 1.5em;
 }
 
 .typewriter__caret {
@@ -2246,6 +2244,10 @@ main#main {
 
   .hero__name {
     word-break: break-word;
+  }
+
+  .hero__role {
+    min-height: 3.2em;
   }
 
   .hero__actions .btn {

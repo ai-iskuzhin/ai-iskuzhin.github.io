@@ -18,7 +18,7 @@ const phrases: Record<Lang, string[]> = {
     'Fullstack-разработчик — от идеи до продакшена',
     'ASP.NET Core · React · TypeScript · PostgreSQL',
     'Пишу open-source .NET SDK для финтеха',
-    'API, которые верифицируют, принимают платежи и масштабируются',
+    'API для верификации и приёма платежей',
   ],
   en: [
     'Fullstack engineer — from idea to production',
