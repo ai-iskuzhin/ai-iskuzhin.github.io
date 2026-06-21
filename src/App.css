@@ -2250,6 +2250,20 @@ main#main {
     min-height: 3.2em;
   }
 
+  /* Safety net: clip any horizontal overflow of page content. #main is a
+     sibling of the sticky header, so this does not affect header stickiness. */
+  #main {
+    overflow-x: hidden;
+  }
+
+  /* Single-column grids so minmax() mins can't exceed a narrow viewport. */
+  .library-grid,
+  .library-grid--wide,
+  .project-grid,
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
   .hero__actions .btn {
     flex: 1 1 auto;
     justify-content: center;
