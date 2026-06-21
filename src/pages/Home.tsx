@@ -34,8 +34,10 @@ export function Home({ lang }: { lang: Lang }) {
       <Ticker lang={lang} />
 
       <section className="hero" aria-label={profile.name[lang]}>
-        <div className="hero__orb hero__orb--1" aria-hidden="true" />
-        <div className="hero__orb hero__orb--2" aria-hidden="true" />
+        <div className="hero__bg" aria-hidden="true">
+          <div className="hero__orb hero__orb--1" />
+          <div className="hero__orb hero__orb--2" />
+        </div>
         <div className="hero__inner">
           <div className="hero__text">
             <p className="eyebrow">{t(ui.hero.eyebrow, lang)}</p>

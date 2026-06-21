@@ -7,6 +7,87 @@
   min-height: 100vh;
 }
 
+/* ============================================================
+   Animated background aurora (subtle, fixed, behind everything)
+   ============================================================ */
+.bg-aurora {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  contain: layout paint;
+}
+
+.bg-aurora span {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.38;
+  will-change: transform;
+}
+
+.bg-aurora span:nth-child(1) {
+  width: 46vw;
+  height: 46vw;
+  top: -12%;
+  left: -8%;
+  background: radial-gradient(circle, var(--accent), transparent 68%);
+  animation: aurora-a 26s ease-in-out infinite alternate;
+}
+
+.bg-aurora span:nth-child(2) {
+  width: 40vw;
+  height: 40vw;
+  top: 24%;
+  right: -12%;
+  background: radial-gradient(circle, var(--accent-2), transparent 68%);
+  animation: aurora-b 32s ease-in-out infinite alternate;
+}
+
+.bg-aurora span:nth-child(3) {
+  width: 38vw;
+  height: 38vw;
+  bottom: -14%;
+  left: 28%;
+  background: radial-gradient(circle, var(--accent), transparent 70%);
+  opacity: 0.28;
+  animation: aurora-c 38s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-a {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(8vw, 6vh, 0) scale(1.18);
+  }
+}
+
+@keyframes aurora-b {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.1);
+  }
+  to {
+    transform: translate3d(-7vw, 8vh, 0) scale(1);
+  }
+}
+
+@keyframes aurora-c {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(6vw, -7vh, 0) scale(1.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-aurora span {
+    animation: none;
+  }
+}
+
 main#main {
   flex: 1;
 }
@@ -306,13 +387,20 @@ main#main {
    ============================================================ */
 .hero {
   position: relative;
-  overflow: hidden;
-  /* contain:paint forces clipping of composited children (blurred orbs),
-     which Safari otherwise lets bleed past the edge and widen the page. */
-  contain: paint;
   max-width: var(--maxw);
   margin: 0 auto;
   padding: clamp(48px, 8vw, 96px) clamp(20px, 5vw, 40px) clamp(36px, 5vw, 64px);
+}
+
+/* Background layer holds the orbs and clips them (contain:paint clips even
+   composited children in Safari) without clipping the hero content/shadow. */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  contain: paint;
+  pointer-events: none;
 }
 
 .hero__orb {
@@ -538,8 +626,6 @@ main#main {
 }
 
 .library-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow);
   border-color: var(--accent-ring);
 }
 

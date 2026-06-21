@@ -50,6 +50,11 @@ export default function App() {
 
   return (
     <div className="app">
+      <div className="bg-aurora" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+      </div>
       <Header route={route} />
       <main id="main">
         <Page route={route} />
