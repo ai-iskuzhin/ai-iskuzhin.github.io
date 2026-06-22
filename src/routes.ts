@@ -2,7 +2,7 @@ import type { Lang } from './content/types'
 import { libraries } from './content/libraries'
 
 export const SITE = {
-  baseUrl: 'https://ai-iskuzhin.github.io',
+  baseUrl: 'https://ai-iskuzhin.is-a.dev',
   name: { ru: 'Айгиз Искужин', en: 'Aigiz Iskuzhin' } as Record<Lang, string>,
   twitter: '',
   ogImage: '/me.jpg',
