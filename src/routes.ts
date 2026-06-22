@@ -5,7 +5,9 @@ export const SITE = {
   baseUrl: 'https://ai-iskuzhin.is-a.dev',
   name: { ru: 'Айгиз Искужин', en: 'Aigiz Iskuzhin' } as Record<Lang, string>,
   twitter: '',
-  ogImage: '/me.jpg',
+  ogImage: '/og.png',
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
 }
 
 export const LANGS: Lang[] = ['ru', 'en']

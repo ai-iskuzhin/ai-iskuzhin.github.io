@@ -21,11 +21,14 @@ function outputFile(path) {
   return join(distDir, path.replace(/^\//, ''), 'index.html')
 }
 
-const template = await readFile(join(distDir, 'index.html'), 'utf8')
+const rawTemplate = await readFile(join(distDir, 'index.html'), 'utf8')
 
-if (!template.includes(HEAD_MARKER)) {
+if (!rawTemplate.includes(HEAD_MARKER)) {
   throw new Error(`index.html is missing the ${HEAD_MARKER} marker`)
 }
+
+// Drop the static <title> from the template; each page injects its own.
+const template = rawTemplate.replace(/\n?\s*<title>[\s\S]*?<\/title>/i, '')
 
 const routes = allRoutes()
 let written = 0

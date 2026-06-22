@@ -35,7 +35,10 @@ function clamp(value: string, max = 160): string {
 
 export function absolute(path: string): string {
   if (path === '/') return `${SITE.baseUrl}/`
-  return `${SITE.baseUrl}${path}${path.endsWith('/') ? '' : '/'}`
+  // Page URLs get a trailing slash; file assets (e.g. /me.jpg) must not.
+  const isFile = /\.[a-z0-9]+$/i.test(path)
+  const suffix = path.endsWith('/') || isFile ? '' : '/'
+  return `${SITE.baseUrl}${path}${suffix}`
 }
 
 export type Meta = { title: string; description: string; type: 'website' | 'article' }
@@ -113,7 +116,17 @@ function jsonLdFor(route: RouteMatch): object[] {
 
   switch (route.kind) {
     case 'home':
-      return [{ '@context': 'https://schema.org', ...person }]
+      return [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          name: SITE.name[lang],
+          url: SITE.baseUrl,
+          inLanguage: HTML_LANG[lang],
+          author: { '@type': 'Person', name: profile.name[lang] },
+        },
+        { '@context': 'https://schema.org', ...person },
+      ]
     case 'library': {
       const library = getLibrary(route.slug)
       if (!library) return []
@@ -193,6 +206,9 @@ export function buildHead(route: RouteMatch): HeadData {
   if (noindex) {
     lines.push(`<meta name="robots" content="noindex, follow" />`)
   } else {
+    lines.push(
+      `<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />`,
+    )
     // hreflang alternates
     for (const altLang of LANGS) {
       const alt = absolute(pathForRoute(alternateRoute(route, altLang)))
@@ -201,15 +217,23 @@ export function buildHead(route: RouteMatch): HeadData {
     lines.push(`<link rel="alternate" hreflang="x-default" href="${absolute(pathForRoute(alternateRoute(route, 'ru')))}" />`)
   }
 
+  const altLocale = OG_LOCALE[lang === 'ru' ? 'en' : 'ru']
+  const imageAlt = esc(SITE.name[lang])
+
   // Open Graph
   lines.push(
     `<meta property="og:type" content="${meta.type}" />`,
     `<meta property="og:site_name" content="${esc(SITE.name[lang])}" />`,
     `<meta property="og:locale" content="${OG_LOCALE[lang]}" />`,
+    `<meta property="og:locale:alternate" content="${altLocale}" />`,
     `<meta property="og:title" content="${title}" />`,
     `<meta property="og:description" content="${description}" />`,
     `<meta property="og:url" content="${canonical}" />`,
     `<meta property="og:image" content="${ogImage}" />`,
+    `<meta property="og:image:type" content="image/png" />`,
+    `<meta property="og:image:width" content="${SITE.ogImageWidth}" />`,
+    `<meta property="og:image:height" content="${SITE.ogImageHeight}" />`,
+    `<meta property="og:image:alt" content="${imageAlt}" />`,
   )
 
   // Twitter
@@ -218,6 +242,7 @@ export function buildHead(route: RouteMatch): HeadData {
     `<meta name="twitter:title" content="${title}" />`,
     `<meta name="twitter:description" content="${description}" />`,
     `<meta name="twitter:image" content="${ogImage}" />`,
+    `<meta name="twitter:image:alt" content="${imageAlt}" />`,
   )
 
   // JSON-LD
