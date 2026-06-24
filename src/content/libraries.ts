@@ -244,6 +244,67 @@ else
     ],
   },
   {
+    slug: 'mtsidnet',
+    name: 'MtsIdNet',
+    repo: 'MtsIdNet',
+    nuget: 'MtsIdNet',
+    docsUrl: 'https://github.com/ai-iskuzhin/MtsIdNet#readme',
+    docsLabel: { ru: 'README на GitHub', en: 'README on GitHub' },
+    category: { ru: 'Идентификация / OIDC', en: 'Identity / OIDC' },
+    icon: '/logos/mtsidnet.png',
+    accent: ['#E30611', '#FF5A5A'],
+    logo: 'nuget',
+    tagline: {
+      ru: '.NET SDK для МТС «Мобильный ID» (OIDC/OAuth2)',
+      en: '.NET SDK for MTS Mobile ID (OIDC/OAuth2)',
+    },
+    summary: {
+      ru: 'Серверная (CIBA) аутентификация Mobile ID: подписанный объект request для si-authorize, публикация JWKS, обработка SMS-OTP и нотификаций, валидация id_token, данные пользователя (premiuminfo) и верификация (kyc-match-split). Единственная зависимость — System.Text.Json.',
+      en: 'Server-initiated (CIBA) Mobile ID auth: a signed request object for si-authorize, JWKS publishing, SMS-OTP and notification handling, id_token validation, user data (premiuminfo) and verification (kyc-match-split). System.Text.Json is the only dependency.',
+    },
+    targets: ['netstandard2.0', 'net8.0', 'net10.0'],
+    license: 'MIT',
+    language: 'C#',
+    install: 'dotnet add package MtsIdNet',
+    quickstart: {
+      language: 'csharp',
+      code: `using MtsIdNet;
+
+var client = new MtsIdClient(httpClient, new MtsIdClientOptions
+{
+    ClientId = "mts_test_service",
+    SigningKey = MtsKeys.RsaFromPem(File.ReadAllText("sp-private.pem")),
+    SigningKeyId = "rsa_kid",
+    NotificationUri = "https://service-provider.io/notification_uri/",
+});
+
+// Publish your JWKS so Mobile ID can verify the signed request:
+string jwksJson = client.BuildPublishedJwks().ToJson();
+
+// Start a server-initiated (CIBA) authentication:
+var result = await client.SiAuthorizeAsync(new RequestObjectParameters
+{
+    Scope = $"{MtsIdConstants.Scopes.OpenId} {MtsIdConstants.Scopes.Authn}",
+    LoginHint = RequestObjectParameters.ForMsisdn("+7 915 000 00 00"),
+    ClientNotificationToken = Guid.NewGuid().ToString(),
+});`,
+    },
+    features: [
+      { ru: 'Подписанный объект request (RS256) для si-authorize', en: 'Signed request object (RS256) for si-authorize' },
+      { ru: 'Публикация JWKS на встроенной криптографии', en: 'JWKS publishing on built-in cryptography' },
+      { ru: 'Серверная аутентификация (SI / CIBA)', en: 'Server-initiated authentication (SI / CIBA)' },
+      { ru: 'Откат на SMS-OTP и валидация id_token', en: 'SMS-OTP fallback and id_token validation' },
+      { ru: 'Данные пользователя (premiuminfo) и KYC (kyc-match-split)', en: 'User data (premiuminfo) and KYC (kyc-match-split)' },
+    ],
+    methods: [
+      { name: 'SiAuthorizeAsync', desc: { ru: 'Запуск аутентификации (CIBA)', en: 'Start authentication (CIBA)' } },
+      { name: 'BuildPublishedJwks', desc: { ru: 'Публичный JWKS', en: 'Public JWKS' } },
+      { name: 'VerifySmsCodeAsync', desc: { ru: 'Проверка SMS-OTP', en: 'Verify SMS-OTP' } },
+      { name: 'GetPremiumInfoAsync', desc: { ru: 'Данные пользователя', en: 'User profile data' } },
+      { name: 'KycMatchAsync', desc: { ru: 'Верификация данных (KYC)', en: 'Data verification (KYC)' } },
+    ],
+  },
+  {
     slug: 'rsqlparsernet',
     name: 'RsqlParserNet',
     repo: 'RsqlParserNet',
