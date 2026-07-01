@@ -184,6 +184,63 @@ Console.WriteLine(link.PaymentUrl);`,
     ],
   },
   {
+    slug: 'tbanknet-junior',
+    name: 'TBankNet.Junior',
+    repo: 'TBankNet.Junior',
+    nuget: 'TBankNet.Junior',
+    docsUrl: 'https://developer.tbank.ru/docs/api/get-api-v-3-school-cards',
+    docsLabel: { ru: 'Документация T-API', en: 'T-API docs' },
+    category: { ru: 'Школьные карты', en: 'School cards' },
+    icon: '/logos/tbanknet-junior.png',
+    accent: ['#FFDD2D', '#22C55E'],
+    logo: 'nuget',
+    tagline: {
+      ru: 'Неофициальный .NET SDK для T-Bank «Джуниор» (школьные карты)',
+      en: 'Unofficial .NET SDK for T-Bank Junior (school cards)',
+    },
+    summary: {
+      ru: 'Работа с API «Джуниор»: список школьных карт и управление школами (список, создание, удаление). Требуется ГОСТ mTLS-сертификат в дополнение к Bearer-токену; предсказуемая модель ошибок.',
+      en: 'Work with the Junior API: list school cards and manage schools (list, create, delete). Requires a GOST mTLS certificate alongside the Bearer token; predictable error model.',
+    },
+    targets: ['netstandard2.0', 'net8.0', 'net10.0'],
+    license: 'MIT',
+    language: 'C#',
+    install: 'dotnet add package TBankNet.Junior',
+    quickstart: {
+      language: 'csharp',
+      code: `using TBankNet.Junior;
+
+// mTLS: attach the GOST certificate to the HttpClient handler.
+var handler = new HttpClientHandler();
+handler.ClientCertificates.Add(gostClientCertificate);
+
+using var httpClient = new HttpClient(handler);
+var client = new TBankJuniorClient(httpClient, new TBankJuniorClientOptions
+{
+    ApiToken = "YOUR_API_TOKEN",
+});
+
+var cards = await client.GetSchoolCardsAsync(
+    from: DateTimeOffset.Parse("2024-09-01T00:00:00Z"),
+    to: DateTimeOffset.Parse("2024-09-30T23:59:59Z"));
+
+foreach (var card in cards.Cards)
+    Console.WriteLine(card.Uid);`,
+    },
+    features: [
+      { ru: 'Список школьных карт', en: 'List school cards' },
+      { ru: 'Список, создание и удаление школ', en: 'List, create and delete schools' },
+      { ru: 'ГОСТ mTLS + Bearer-токен', en: 'GOST mTLS + Bearer token' },
+      { ru: 'Разобранная модель ошибок T-API', en: 'Parsed T-API error model' },
+    ],
+    methods: [
+      { name: 'GetSchoolCardsAsync', desc: { ru: 'Список школьных карт', en: 'List school cards' } },
+      { name: 'GetSchoolsAsync', desc: { ru: 'Список школ', en: 'List schools' } },
+      { name: 'CreateSchoolsAsync', desc: { ru: 'Создание школ', en: 'Create schools' } },
+      { name: 'DeleteSchoolAsync', desc: { ru: 'Удаление школы', en: 'Delete a school' } },
+    ],
+  },
+  {
     slug: 'atolonlinenet',
     name: 'AtolOnlineNet',
     repo: 'AtolOnlineNet',
