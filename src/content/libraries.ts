@@ -126,6 +126,64 @@ if (response.Success)
     ],
   },
   {
+    slug: 'tbanknet-b2bqr',
+    name: 'TBankNet.B2BQr',
+    repo: 'TBankNet.B2BQr',
+    nuget: 'TBankNet.B2BQr',
+    docsUrl: 'https://developer.tbank.ru/docs/api/post-api-v-1-b-2-b-qr-onetime',
+    docsLabel: { ru: 'Документация T-API', en: 'T-API docs' },
+    category: { ru: 'Платежи / СБП', en: 'Payments / SBP' },
+    icon: '/logos/tbanknet-b2bqr.png',
+    accent: ['#FFDD2D', '#2563EB'],
+    logo: 'nuget',
+    tagline: {
+      ru: 'Неофициальный .NET SDK для T-Bank «B2B QR» (СБП)',
+      en: 'Unofficial .NET SDK for T-Bank B2B QR (SBP)',
+    },
+    summary: {
+      ru: 'Выставление B2B-ссылок на оплату через СБП: одноразовые и многоразовые ссылки, получение статуса и QR-изображения. Bearer-токен, X-Request-Id и предсказуемая модель ошибок.',
+      en: 'Issue B2B payment links over SBP: one-time and reusable links, plus status and QR-image retrieval. Bearer token, X-Request-Id and a predictable error model.',
+    },
+    targets: ['netstandard2.0', 'net8.0', 'net10.0'],
+    license: 'MIT',
+    language: 'C#',
+    install: 'dotnet add package TBankNet.B2BQr',
+    quickstart: {
+      language: 'csharp',
+      code: `using TBankNet.B2BQr;
+
+using var httpClient = new HttpClient();
+var client = new TBankB2BQrClient(httpClient, new TBankB2BQrClientOptions
+{
+    ApiToken = "YOUR_API_TOKEN",
+    Environment = TBankB2BQrEnvironment.Sandbox,
+});
+
+var link = await client.CreateOneTimeAsync(new TBankB2BQrOneTimeRequest
+{
+    AccountNumber = "40802810000000144655",
+    Sum = 12345.67m,
+    Purpose = "Оплата услуг по договору",
+    Ttl = 30,
+    Vat = TBankB2BQrVat.Vat22,
+});
+
+Console.WriteLine(link.PaymentUrl);`,
+    },
+    features: [
+      { ru: 'Одноразовые ссылки на оплату', en: 'One-time payment links' },
+      { ru: 'Многоразовые ссылки на оплату', en: 'Reusable payment links' },
+      { ru: 'Статус ссылки и QR-изображение', en: 'Link status and QR image' },
+      { ru: 'Среды Sandbox / Production', en: 'Sandbox / Production environments' },
+      { ru: 'Разобранная модель ошибок T-API', en: 'Parsed T-API error model' },
+    ],
+    methods: [
+      { name: 'CreateOneTimeAsync', desc: { ru: 'Одноразовая ссылка', en: 'One-time link' } },
+      { name: 'CreateReusableAsync', desc: { ru: 'Многоразовая ссылка', en: 'Reusable link' } },
+      { name: 'GetAsync', desc: { ru: 'Статус и изображение ссылки', en: 'Link status and image' } },
+    ],
+  },
+  {
     slug: 'atolonlinenet',
     name: 'AtolOnlineNet',
     repo: 'AtolOnlineNet',
