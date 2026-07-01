@@ -1259,11 +1259,18 @@ main#main {
   padding: 16px clamp(20px, 5vw, 40px) 32px;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 8px 24px;
   justify-content: space-between;
   border-top: 1px solid var(--line);
   font-size: 0.82rem;
   color: var(--muted);
+}
+
+.site-footer__legal .ghpvc {
+  height: 26px;
+  width: auto;
+  border-radius: 6px;
 }
 
 /* ============================================================

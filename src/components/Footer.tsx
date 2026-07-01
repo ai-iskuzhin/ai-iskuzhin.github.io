@@ -42,6 +42,13 @@ export function Footer({ lang }: { lang: Lang }) {
 
       <div className="site-footer__legal">
         <span>© {year} {profile.name[lang]}. {t(ui.footer.rights, lang)}</span>
+        <img
+          className="ghpvc"
+          src="https://komarev.com/ghpvc/?username=ai-iskuzhin&style=for-the-badge&color=6D28D9&label=PROFILE+VIEWS"
+          alt="Profile views"
+          loading="lazy"
+          decoding="async"
+        />
       </div>
 
       {lang === 'ru' ? (
