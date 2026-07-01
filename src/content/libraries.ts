@@ -241,6 +241,65 @@ foreach (var card in cards.Cards)
     ],
   },
   {
+    slug: 'tbanknet-invoicing',
+    name: 'TBankNet.Invoicing',
+    repo: 'TBankNet.Invoicing',
+    nuget: 'TBankNet.Invoicing',
+    docsUrl: 'https://developer.tbank.ru/docs/products/invoicing',
+    docsLabel: { ru: 'Документация T-API', en: 'T-API docs' },
+    category: { ru: 'Выставление счетов', en: 'Invoicing' },
+    icon: '/logos/tbanknet-invoicing.png',
+    accent: ['#FFDD2D', '#7C3AED'],
+    logo: 'nuget',
+    tagline: {
+      ru: 'Неофициальный .NET SDK для T-Bank «Выставление счетов»',
+      en: 'Unofficial .NET SDK for T-Bank Invoicing',
+    },
+    summary: {
+      ru: 'Выставление счетов на оплату (PDF + QR СБП) и отслеживание их статуса. Bearer-токен, заголовок X-Request-Id, локальная валидация и предсказуемая модель ошибок.',
+      en: 'Issue invoices (PDF + SBP QR) and track their status. Bearer token, X-Request-Id header, local validation and a predictable error model.',
+    },
+    targets: ['netstandard2.0', 'net8.0', 'net10.0'],
+    license: 'MIT',
+    language: 'C#',
+    install: 'dotnet add package TBankNet.Invoicing',
+    quickstart: {
+      language: 'csharp',
+      code: `using TBankNet.Invoicing;
+
+using var httpClient = new HttpClient();
+var client = new TBankInvoiceClient(httpClient, new TBankInvoiceClientOptions
+{
+    ApiToken = "YOUR_API_TOKEN",
+    Environment = TBankInvoiceEnvironment.Sandbox,
+});
+
+var result = await client.SendInvoiceAsync(new TBankSendInvoiceRequest
+{
+    InvoiceNumber = "12345",
+    DueDate = new DateTime(2026, 8, 22),
+    Payer = new TBankInvoicePayer { Name = "ООО «Контрагент»", Inn = "730990470834" },
+    Items = new[]
+    {
+        new TBankInvoiceItem { Name = "Услуга", Price = 100m, Unit = "шт", Vat = TBankInvoiceVat.Vat22, Amount = 1m },
+    },
+    Contacts = new[] { new TBankInvoiceContact { Email = "buyer@example.com" } },
+});
+
+Console.WriteLine(result.PdfUrl);   // PDF link (valid 10 days)`,
+    },
+    features: [
+      { ru: 'Выставление счёта: PDF и QR СБП', en: 'Issue an invoice: PDF and SBP QR' },
+      { ru: 'Отслеживание статуса счёта', en: 'Track invoice status' },
+      { ru: 'Среды Sandbox / Production', en: 'Sandbox / Production environments' },
+      { ru: 'Локальная валидация и модель ошибок', en: 'Local validation and error model' },
+    ],
+    methods: [
+      { name: 'SendInvoiceAsync', desc: { ru: 'Выставить счёт', en: 'Issue an invoice' } },
+      { name: 'GetInvoiceAsync', desc: { ru: 'Статус и данные счёта', en: 'Invoice status and details' } },
+    ],
+  },
+  {
     slug: 'atolonlinenet',
     name: 'AtolOnlineNet',
     repo: 'AtolOnlineNet',
