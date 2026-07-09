@@ -34,7 +34,6 @@ export const ui = {
     experience: { ru: 'Опыт работы', en: 'Work experience' },
     projects: { ru: 'Проекты', en: 'Projects' },
     blog: { ru: 'Блог', en: 'Blog' },
-    github: { ru: 'GitHub в цифрах', en: 'GitHub at a glance' },
     contact: { ru: 'Контакты', en: 'Contact' },
   },
   library: {

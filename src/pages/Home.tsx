@@ -1,6 +1,6 @@
 import type { Lang } from '../content/types'
 import { ui, t } from '../i18n'
-import { profile, experience, projects, socials, contactEmail, githubUser, prettyHref } from '../content/profile'
+import { profile, experience, projects, socials, contactEmail, prettyHref } from '../content/profile'
 import { libraries } from '../content/libraries'
 import { librariesPath, verificahubPath } from '../routes'
 import { Link } from '../router'
@@ -253,26 +253,6 @@ export function Home({ lang }: { lang: Lang }) {
               </div>
             </article>
           ))}
-        </div>
-      </section>
-
-      <section className="section" id="github">
-        <div className="section__head">
-          <p className="section__kicker">{t(ui.sections.github, lang)}</p>
-        </div>
-        <div className="github-cards">
-          <img
-            className="github-cards__stats"
-            src={`https://github-readme-stats.vercel.app/api?username=${githubUser}&show_icons=true&hide_border=true&include_all_commits=true&count_private=true&title_color=7C3AED&icon_color=2563EB&text_color=8a93a6&bg_color=00000000`}
-            alt="GitHub stats"
-            loading="lazy"
-          />
-          <img
-            className="github-cards__langs"
-            src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${githubUser}&layout=compact&langs_count=8&hide_border=true&title_color=7C3AED&text_color=8a93a6&bg_color=00000000`}
-            alt="Top languages"
-            loading="lazy"
-          />
         </div>
       </section>
 

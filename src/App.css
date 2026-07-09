@@ -1130,22 +1130,6 @@ main#main {
 }
 
 /* ============================================================
-   GitHub cards
-   ============================================================ */
-.github-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 18px;
-  align-items: center;
-  justify-content: center;
-}
-
-.github-cards img {
-  height: 165px;
-  max-width: 100%;
-}
-
-/* ============================================================
    Contact
    ============================================================ */
 .contact__card {

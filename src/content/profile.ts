@@ -215,7 +215,6 @@ export const socials: SocialLink[] = [
 ]
 
 export const contactEmail = 'aigiz.iskuzhin@yandex.ru'
-export const githubUser = 'ai-iskuzhin'
 
 /**
  * Sole-proprietor registration data. Already public in ЕГРИП and printed in the
