@@ -6,7 +6,6 @@ export const SITE = {
   baseUrl: 'https://ai-iskuzhin.is-a.dev',
   name: { ru: 'Айгиз Искужин', en: 'Aigiz Iskuzhin' } as Record<Lang, string>,
   twitter: '',
-  ogImage: '/og.png',
   ogImageWidth: 1200,
   ogImageHeight: 630,
 }
@@ -63,6 +62,30 @@ export function pathForRoute(route: RouteMatch): string {
       return postPath(route.lang, route.slug)
     case 'notFound':
       return route.lang === 'en' ? '/en/404' : '/404'
+  }
+}
+
+/**
+ * The social card for a route. Kept in lockstep with scripts/og.mjs, which
+ * writes exactly these paths into dist/ at build time.
+ */
+export function ogImagePath(route: RouteMatch): string {
+  const dir = `/og/${route.lang}`
+  switch (route.kind) {
+    case 'home':
+      return `${dir}/home.png`
+    case 'libraries':
+      return `${dir}/open-source.png`
+    case 'library':
+      return `${dir}/open-source-${route.slug}.png`
+    case 'verificahub':
+      return `${dir}/verificahub.png`
+    case 'blog':
+      return `${dir}/blog.png`
+    case 'post':
+      return `${dir}/blog-${route.slug}.png`
+    case 'notFound':
+      return `${dir}/home.png`
   }
 }
 

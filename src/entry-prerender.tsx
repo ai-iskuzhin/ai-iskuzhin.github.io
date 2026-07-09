@@ -9,8 +9,12 @@ import App from './App'
 import { RouterProvider } from './router'
 import { pathForRoute, type RouteMatch } from './routes'
 
-export { allRoutes, pathForRoute, SITE } from './routes'
+export { allRoutes, pathForRoute, ogImagePath, SITE } from './routes'
 export { buildHead } from './seo'
+// Consumed by scripts/og.mjs so the cards read from the app's own content.
+export { libraries } from './content/libraries'
+export { posts } from './content/posts'
+export { profile } from './content/profile'
 
 /** Render a route to static HTML for the `<div id="root">` shell. */
 export function renderPage(route: RouteMatch): string {

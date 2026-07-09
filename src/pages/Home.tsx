@@ -13,15 +13,19 @@ import { ArrowIcon, ExternalIcon, MailIcon } from '../components/Icons'
 
 const packageCount = libraries.reduce((total, lib) => total + 1 + (lib.nugetFamily?.length ?? 0), 0)
 
+// The first phrase is what prerendered HTML and crawlers see, so it carries the
+// positioning; the rest rotate on the client.
 const phrases: Record<Lang, string[]> = {
   ru: [
-    'Fullstack-разработчик — от идеи до продакшена',
+    'Разработчик IT-продуктов — от идеи до продакшена',
+    'Финтех, платёжные интеграции и эквайринг',
     'ASP.NET Core · React · TypeScript · PostgreSQL',
     'Пишу open-source .NET SDK для финтеха',
     'API для верификации и приёма платежей',
   ],
   en: [
-    'Fullstack engineer — from idea to production',
+    'IT product developer — from idea to production',
+    'Fintech, payment integrations and acquiring',
     'ASP.NET Core · React · TypeScript · PostgreSQL',
     'I build open-source .NET SDKs for fintech',
     'APIs that verify, charge and scale',

@@ -2,13 +2,19 @@ import type { L } from './types'
 
 export const profile = {
   name: { ru: 'Айгиз Искужин', en: 'Aigiz Iskuzhin' } as L,
+  /** Short: it follows the name in <title> and is the JSON-LD jobTitle. */
   role: {
-    ru: '.NET-разработчик и автор open-source SDK',
-    en: '.NET engineer & open-source SDK author',
+    ru: 'Разработчик IT-продуктов',
+    en: 'IT product developer',
+  } as L,
+  /** Carries the keywords the broader role no longer states outright. */
+  specialty: {
+    ru: 'Финтех, платёжные интеграции и open-source .NET SDK',
+    en: 'Fintech, payment integrations and open-source .NET SDKs',
   } as L,
   tagline: {
-    ru: '4 года коммерческого опыта: backend на .NET, платёжные интеграции, инфраструктура и собственные продукты.',
-    en: '4 years of commercial experience: .NET backend, payment integrations, infrastructure and my own products.',
+    ru: 'Разрабатываю IT-продукты на .NET: платёжные интеграции, backend и инфраструктура. Четыре года коммерческого опыта и девять open-source SDK.',
+    en: 'I build IT products on .NET: payment integrations, backend and infrastructure. Four years of commercial experience and nine open-source SDKs.',
   } as L,
   location: { ru: 'Уфа, Россия · удалённо', en: 'Ufa, Russia · remote' } as L,
   about: {

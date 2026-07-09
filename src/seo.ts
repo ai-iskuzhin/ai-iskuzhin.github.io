@@ -1,5 +1,5 @@
 import type { Lang } from './content/types'
-import { getLibrary } from './content/libraries'
+import { getLibrary, libraries } from './content/libraries'
 import { getPost } from './content/posts'
 import { profile, socials } from './content/profile'
 import {
@@ -7,6 +7,7 @@ import {
   LANGS,
   type RouteMatch,
   alternateRoute,
+  ogImagePath,
   pathForRoute,
 } from './routes'
 
@@ -41,7 +42,7 @@ export function absolute(path: string): string {
   return `${SITE.baseUrl}${path}${suffix}`
 }
 
-export type Meta = { title: string; description: string; type: 'website' | 'article' }
+export type Meta = { title: string; description: string; type: 'website' | 'article' | 'profile' }
 
 export function metaFor(route: RouteMatch): Meta {
   const lang = route.lang
@@ -51,18 +52,22 @@ export function metaFor(route: RouteMatch): Meta {
       return {
         title: `${name} — ${profile.role[lang]}`,
         description: clamp(profile.tagline[lang]),
-        type: 'website',
+        type: 'profile',
       }
-    case 'libraries':
+    case 'libraries': {
+      // Name the packages from the source of truth — the list has grown past the
+      // five that used to be hardcoded here.
+      const names = libraries.map((library) => library.name).join(', ')
       return {
         title: lang === 'ru' ? `Open-source .NET SDK — ${name}` : `Open-source .NET SDKs — ${name}`,
         description: clamp(
           lang === 'ru'
-            ? 'Открытые .NET SDK для платежей, эквайринга, фискализации и верификации: YooKassaNet, TBankAcquiringNet, AtolOnlineNet, TelegramGatewayNet, RsqlParserNet.'
-            : 'Open-source .NET SDKs for payments, acquiring, fiscalization and verification: YooKassaNet, TBankAcquiringNet, AtolOnlineNet, TelegramGatewayNet, RsqlParserNet.',
+            ? `${libraries.length} открытых .NET SDK для платежей, эквайринга, фискализации и верификации: ${names}.`
+            : `${libraries.length} open-source .NET SDKs for payments, acquiring, fiscalization and verification: ${names}.`,
         ),
         type: 'website',
       }
+    }
     case 'library': {
       const library = getLibrary(route.slug)
       if (!library) return { title: name, description: '', type: 'website' }
@@ -109,7 +114,7 @@ function jsonLdFor(route: RouteMatch): object[] {
     name: profile.name[lang],
     jobTitle: profile.role[lang],
     url: SITE.baseUrl,
-    image: absolute(SITE.ogImage),
+    image: absolute('/me.jpg'),
     sameAs: socials.filter((s) => /^https?:/.test(s.href)).map((s) => s.href),
     knowsAbout: ['.NET', 'C#', 'ASP.NET Core', 'PostgreSQL', 'Payments', 'Fintech', 'Backend'],
   }
@@ -194,7 +199,7 @@ export function buildHead(route: RouteMatch): HeadData {
   const canonical = absolute(pathForRoute(route))
   const title = esc(meta.title)
   const description = esc(meta.description)
-  const ogImage = absolute(SITE.ogImage)
+  const ogImage = absolute(ogImagePath(route))
   const noindex = route.kind === 'notFound'
 
   const lines: string[] = [

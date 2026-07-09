@@ -2,8 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="alternate icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <!-- favicon.svg is a base64 raster in an <svg> wrapper (188 KB, no vector
+         paths), so it is not linked: the .ico and the 96px PNG look identical
+         for a fraction of the bytes. -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32 48x48" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
