@@ -228,8 +228,8 @@ export function Home({ lang }: { lang: Lang }) {
         </div>
         <div className="project-grid">
           {projects.map((project) => (
-            <article className="project-card" key={project.title}>
-              <h3>{project.title}</h3>
+            <article className="project-card" key={project.title.en}>
+              <h3>{t(project.title, lang)}</h3>
               <p>{t(project.description, lang)}</p>
               {project.notes ? (
                 <ul className="bullets bullets--compact">

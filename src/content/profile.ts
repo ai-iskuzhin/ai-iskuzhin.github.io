@@ -154,7 +154,8 @@ export const experience: Experience[] = [
 ]
 
 export type Project = {
-  title: string
+  /** Localized: a mixed "Платёжный шлюз / Payment gateway" string leaked Cyrillic onto /en. */
+  title: L
   description: L
   notes?: L[]
   stack: string[]
@@ -163,7 +164,7 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    title: 'Moonlume VPN',
+    title: { ru: 'Moonlume VPN', en: 'Moonlume VPN' },
     description: {
       ru: 'Сервис интернет-приватности: безопасное подключение, защита трафика и удобное управление доступом.',
       en: 'An internet-privacy service: secure connectivity, traffic protection and easy access management.',
@@ -172,7 +173,7 @@ export const projects: Project[] = [
     links: [{ label: 'moonlumevpn.ru', href: 'https://moonlumevpn.ru' }],
   },
   {
-    title: 'Платёжный шлюз / Payment gateway',
+    title: { ru: 'Платёжный шлюз', en: 'Payment gateway' },
     description: {
       ru: 'Промышленный платёжный шлюз с унифицированным API, постпроцессингом оплат и интеграциями с эквайрингом и биллингом.',
       en: 'A production payment gateway with a unified API, payment post-processing and acquirer/billing integrations.',
@@ -188,7 +189,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    title: 'FAForever Launcher',
+    title: { ru: 'FAForever Launcher', en: 'FAForever Launcher' },
     description: {
       ru: 'Десктопный лаунчер для игрового сообщества с real-time обменом данными, API-интеграциями и визуализацией.',
       en: 'A desktop launcher for a gaming community with real-time data exchange, API integrations and visualization.',

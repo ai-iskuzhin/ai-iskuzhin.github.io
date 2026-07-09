@@ -308,6 +308,16 @@ export function buildHead(route: RouteMatch): HeadData {
     `<link rel="canonical" href="${canonical}" />`,
   ]
 
+  // Start the body font before the stylesheet that declares it has been parsed.
+  // Only Russian pages paint Cyrillic, and `crossorigin` is required on font
+  // preloads even same-origin, or the fetch is made twice.
+  const fontSubsets = lang === 'ru' ? ['inter-cyrillic', 'inter-latin'] : ['inter-latin']
+  for (const subset of fontSubsets) {
+    lines.push(
+      `<link rel="preload" href="/fonts/${subset}.woff2" as="font" type="font/woff2" crossorigin />`,
+    )
+  }
+
   if (noindex) {
     lines.push(`<meta name="robots" content="noindex, follow" />`)
   } else {

@@ -29,7 +29,7 @@ function buildItems(lang: Lang): Item[] {
 
   for (const project of projects) {
     const href = project.links[0]?.href
-    if (href) items.push({ kind: 'external', label: project.title, href })
+    if (href) items.push({ kind: 'external', label: t(project.title, lang), href })
   }
 
   return items

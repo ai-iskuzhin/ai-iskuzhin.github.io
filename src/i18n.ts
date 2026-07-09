@@ -14,7 +14,7 @@ export const ui = {
     contact: { ru: 'Контакты', en: 'Contact' },
   },
   hero: {
-    eyebrow: { ru: 'Fullstack-инженер · автор SDK', en: 'Fullstack engineer · SDK author' },
+    eyebrow: { ru: 'Разработчик IT-продуктов · финтех', en: 'IT product developer · fintech' },
     ctaProjects: { ru: 'Открытый код', en: 'Open source' },
     ctaContact: { ru: 'Связаться', en: 'Get in touch' },
     stats: {
