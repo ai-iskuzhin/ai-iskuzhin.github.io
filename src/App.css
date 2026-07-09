@@ -974,16 +974,18 @@ main#main {
 /* ============================================================
    Projects
    ============================================================ */
+/* One card per row. The card fills the width; the prose inside does not, so the
+   lines stay at a readable measure. */
 .project-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 18px;
 }
 
 .project-card {
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  padding: clamp(24px, 2.6vw, 34px);
   border-radius: var(--radius);
   border: 1px solid var(--line);
   background: var(--surface);
@@ -1024,10 +1026,16 @@ main#main {
   border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
+/* `flex: 1` equalised heights across grid columns; a stacked list has no columns
+   to equalise, so drop it and cap the line length instead. */
 .project-card > p {
   margin-top: 8px;
   color: var(--muted);
-  flex: 1;
+  max-width: 78ch;
+}
+
+.project-card .bullets--compact {
+  max-width: 78ch;
 }
 
 .project-card__links {
@@ -2376,10 +2384,10 @@ main#main {
     overflow-x: hidden;
   }
 
-  /* Single-column grids so minmax() mins can't exceed a narrow viewport. */
+  /* Single-column grids so minmax() mins can't exceed a narrow viewport.
+     .project-grid is a flex column already, so it needs no override. */
   .library-grid,
   .library-grid--wide,
-  .project-grid,
   .feature-grid {
     grid-template-columns: 1fr;
   }
