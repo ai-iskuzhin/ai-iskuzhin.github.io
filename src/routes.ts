@@ -1,5 +1,6 @@
 import type { Lang } from './content/types'
 import { libraries } from './content/libraries'
+import { posts } from './content/posts'
 
 export const SITE = {
   baseUrl: 'https://ai-iskuzhin.is-a.dev',
@@ -92,6 +93,12 @@ export function matchRoute(pathname: string): RouteMatch {
     return { kind: 'notFound', lang }
   }
   if (rest === '/verificahub') return { kind: 'verificahub', lang }
+  if (rest === '/blog') return { kind: 'blog', lang }
+  if (rest.startsWith('/blog/')) {
+    const slug = rest.slice('/blog/'.length)
+    if (posts.some((post) => post.slug === slug)) return { kind: 'post', lang, slug }
+    return { kind: 'notFound', lang }
+  }
   return { kind: 'notFound', lang }
 }
 
@@ -103,6 +110,8 @@ export function allRoutes(): RouteMatch[] {
     routes.push({ kind: 'libraries', lang })
     for (const library of libraries) routes.push({ kind: 'library', lang, slug: library.slug })
     routes.push({ kind: 'verificahub', lang })
+    routes.push({ kind: 'blog', lang })
+    for (const post of posts) routes.push({ kind: 'post', lang, slug: post.slug })
   }
   return routes
 }

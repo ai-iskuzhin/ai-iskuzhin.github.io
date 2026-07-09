@@ -12,9 +12,10 @@ const root = dirname(dirname(fileURLToPath(import.meta.url)))
 const distDir = join(root, 'dist')
 const ssrEntry = pathToFileURL(join(root, '.prerender/entry-prerender.js')).href
 
-const { allRoutes, pathForRoute, buildHead, SITE } = await import(ssrEntry)
+const { allRoutes, pathForRoute, buildHead, SITE, renderPage } = await import(ssrEntry)
 
 const HEAD_MARKER = '<!--app-head-->'
+const ROOT_MARKER = '<div id="root"></div>'
 
 function outputFile(path) {
   if (path === '/') return join(distDir, 'index.html')
@@ -27,18 +28,28 @@ if (!rawTemplate.includes(HEAD_MARKER)) {
   throw new Error(`index.html is missing the ${HEAD_MARKER} marker`)
 }
 
+if (!rawTemplate.includes(ROOT_MARKER)) {
+  throw new Error(`index.html is missing the ${ROOT_MARKER} mount point`)
+}
+
 // Drop the static <title> from the template; each page injects its own.
 const template = rawTemplate.replace(/\n?\s*<title>[\s\S]*?<\/title>/i, '')
 
 const routes = allRoutes()
 let written = 0
 
+// `$&`, `` $` `` and friends are substitution patterns in a replacement string,
+// and rendered markup (e.g. C# snippets) can contain them. Always replace via a
+// function so the injected HTML is treated as a literal.
+const literal = (value) => () => value
+
 for (const route of routes) {
   const head = buildHead(route)
   const path = pathForRoute(route)
   const html = template
-    .replace('<html lang="en"', `<html lang="${head.lang}"`)
-    .replace(HEAD_MARKER, head.tags)
+    .replace('<html lang="en"', literal(`<html lang="${head.lang}"`))
+    .replace(HEAD_MARKER, literal(head.tags))
+    .replace(ROOT_MARKER, literal(`<div id="root">${renderPage(route)}</div>`))
 
   const file = outputFile(path)
   await mkdir(dirname(file), { recursive: true })

@@ -5,6 +5,7 @@ import { getLibrary } from '../content/libraries'
 import { librariesPath } from '../routes'
 import { Link } from '../router'
 import { NotFound } from './NotFound'
+import { CodeBlock } from '../components/CodeBlock'
 import { NugetBadge } from '../components/NugetBadge'
 import { ReadmeViewer } from '../components/ReadmeViewer'
 import { GitHubIcon, NuGetIcon, ExternalIcon, ArrowIcon, CheckIcon } from '../components/Icons'
@@ -87,6 +88,16 @@ export function LibraryDetail({ lang, slug }: { lang: Lang; slug: string }) {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section className="library-section">
+        <h2>{t(ui.library.install, lang)}</h2>
+        <CodeBlock code={library.install} language="bash" lang={lang} />
+      </section>
+
+      <section className="library-section">
+        <h2>{t(ui.library.quickstart, lang)}</h2>
+        <CodeBlock code={library.quickstart.code} language={library.quickstart.language} lang={lang} />
       </section>
 
       {library.methods && library.methods.length > 0 ? (

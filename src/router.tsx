@@ -23,10 +23,18 @@ function currentPath(): string {
   return window.location.pathname + window.location.hash
 }
 
-export function RouterProvider({ children }: { children: ReactNode }) {
-  const [path, setPath] = useState<string>(() =>
-    typeof window === 'undefined' ? '/' : window.location.pathname,
-  )
+export function RouterProvider({
+  children,
+  initialPath,
+}: {
+  children: ReactNode
+  /** Set by the prerenderer so the server renders the route being built. */
+  initialPath?: string
+}) {
+  const [path, setPath] = useState<string>(() => {
+    if (initialPath !== undefined) return initialPath
+    return typeof window === 'undefined' ? '/' : window.location.pathname
+  })
 
   useEffect(() => {
     const onPop = () => setPath(window.location.pathname)
