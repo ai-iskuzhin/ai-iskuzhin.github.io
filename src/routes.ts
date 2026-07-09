@@ -44,6 +44,10 @@ export function blogPath(lang: Lang): string {
 export function postPath(lang: Lang, slug: string): string {
   return `${prefix(lang)}/blog/${slug}`
 }
+/** RSS feed, one per language. Written by scripts/prerender.mjs. */
+export function feedPath(lang: Lang): string {
+  return `${prefix(lang)}/blog/rss.xml`
+}
 
 /** The canonical URL path for a given route. */
 export function pathForRoute(route: RouteMatch): string {

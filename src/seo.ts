@@ -1,12 +1,17 @@
 import type { Lang } from './content/types'
 import { getLibrary, libraries } from './content/libraries'
 import { getPost } from './content/posts'
-import { profile, socials } from './content/profile'
+import { contactEmail, legal, profile, socials } from './content/profile'
 import {
   SITE,
   LANGS,
   type RouteMatch,
   alternateRoute,
+  blogPath,
+  feedPath,
+  homePath,
+  librariesPath,
+  libraryPath,
   ogImagePath,
   pathForRoute,
 } from './routes'
@@ -107,90 +112,185 @@ export function metaFor(route: RouteMatch): Meta {
   }
 }
 
-function jsonLdFor(route: RouteMatch): object[] {
-  const lang = route.lang
-  const person = {
+const PERSON_ID = `${SITE.baseUrl}/#person`
+const WEBSITE_ID = `${SITE.baseUrl}/#website`
+
+/** The Person node — the entity every other node points back at. */
+function personNode(lang: Lang): object {
+  return {
     '@type': 'Person',
+    '@id': PERSON_ID,
     name: profile.name[lang],
     jobTitle: profile.role[lang],
+    description: profile.specialty[lang],
     url: SITE.baseUrl,
     image: absolute('/me.jpg'),
+    email: `mailto:${contactEmail}`,
     sameAs: socials.filter((s) => /^https?:/.test(s.href)).map((s) => s.href),
     knowsAbout: ['.NET', 'C#', 'ASP.NET Core', 'PostgreSQL', 'Payments', 'Fintech', 'Backend'],
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: legal.city[lang],
+      addressRegion: legal.region[lang],
+      addressCountry: legal.country,
+    },
+    // schema.org allows taxID on Person, so the ИП needs no separate
+    // Organization node. ОГРНИП and ОКВЭД have no native property.
+    taxID: legal.inn,
+    identifier: [
+      { '@type': 'PropertyValue', propertyID: 'OGRNIP', name: 'ОГРНИП', value: legal.ogrnip },
+      { '@type': 'PropertyValue', propertyID: 'OKVED', name: 'ОКВЭД', value: legal.okved },
+    ],
   }
+}
+
+function websiteNode(lang: Lang): object {
+  return {
+    '@type': 'WebSite',
+    '@id': WEBSITE_ID,
+    name: SITE.name[lang],
+    url: SITE.baseUrl,
+    inLanguage: HTML_LANG[lang],
+    publisher: { '@id': PERSON_ID },
+    // No potentialAction/SearchAction: Google removed the sitelinks searchbox
+    // in 2024, and the site has no search endpoint anyway.
+  }
+}
+
+function crumbs(items: { name: string; path?: string }[]): object {
+  return {
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      // The final crumb may omit `item`, per Google's breadcrumb spec.
+      ...(item.path ? { item: absolute(item.path) } : {}),
+    })),
+  }
+}
+
+function jsonLdFor(route: RouteMatch): object[] {
+  const lang = route.lang
+  const url = absolute(pathForRoute(route))
+  const meta = metaFor(route)
+  const home = { name: SITE.name[lang], path: homePath(lang) }
+  const graph: object[] = [personNode(lang), websiteNode(lang)]
+
+  const page = (type: string, extra: object = {}) => ({
+    '@type': type,
+    '@id': `${url}#page`,
+    url,
+    name: meta.title,
+    description: meta.description,
+    inLanguage: HTML_LANG[lang],
+    isPartOf: { '@id': WEBSITE_ID },
+    ...extra,
+  })
 
   switch (route.kind) {
     case 'home':
-      return [
+      graph.push(page('ProfilePage', { mainEntity: { '@id': PERSON_ID } }))
+      break
+
+    case 'libraries':
+      graph.push(
+        page('CollectionPage', { about: { '@id': PERSON_ID } }),
+        crumbs([home, { name: 'Open Source' }]),
         {
-          '@context': 'https://schema.org',
-          '@type': 'WebSite',
-          name: SITE.name[lang],
-          url: SITE.baseUrl,
-          inLanguage: HTML_LANG[lang],
-          author: { '@type': 'Person', name: profile.name[lang] },
+          '@type': 'ItemList',
+          itemListElement: libraries.map((library, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            name: library.name,
+            url: absolute(libraryPath(lang, library.slug)),
+          })),
         },
-        { '@context': 'https://schema.org', ...person },
-      ]
+      )
+      break
+
     case 'library': {
       const library = getLibrary(route.slug)
-      if (!library) return []
-      return [
+      if (!library) break
+      graph.push(
+        page('WebPage'),
+        crumbs([home, { name: 'Open Source', path: librariesPath(lang) }, { name: library.name }]),
         {
-          '@context': 'https://schema.org',
           '@type': 'SoftwareSourceCode',
+          '@id': `${url}#software`,
           name: library.name,
           description: library.summary[lang],
           codeRepository: `https://github.com/ai-iskuzhin/${library.repo}`,
           programmingLanguage: library.language,
           runtimePlatform: '.NET',
           license: 'https://opensource.org/licenses/MIT',
-          author: { '@type': 'Person', name: profile.name[lang], url: SITE.baseUrl },
-          url: absolute(pathForRoute(route)),
+          author: { '@id': PERSON_ID },
+          url,
         },
-        {
-          '@context': 'https://schema.org',
-          '@type': 'BreadcrumbList',
-          itemListElement: [
-            { '@type': 'ListItem', position: 1, name: SITE.name[lang], item: absolute(route.lang === 'en' ? '/en' : '/') },
-            { '@type': 'ListItem', position: 2, name: 'Open Source', item: absolute(route.lang === 'en' ? '/en/open-source' : '/open-source') },
-            { '@type': 'ListItem', position: 3, name: library.name, item: absolute(pathForRoute(route)) },
-          ],
-        },
-      ]
+      )
+      break
     }
+
     case 'verificahub':
-      return [
+      graph.push(page('WebPage'), crumbs([home, { name: 'VerificaHub' }]), {
+        '@type': 'Organization',
+        '@id': 'https://verificahub.ru/#organization',
+        name: 'VerificaHub',
+        url: 'https://verificahub.ru',
+        description: meta.description,
+        founder: { '@id': PERSON_ID },
+      })
+      break
+
+    case 'blog':
+      graph.push(
         {
-          '@context': 'https://schema.org',
-          '@type': 'Organization',
-          name: 'VerificaHub',
-          url: 'https://verificahub.ru',
-          description: metaFor(route).description,
-          founder: { '@type': 'Person', name: profile.name[lang], url: SITE.baseUrl },
+          '@type': 'Blog',
+          '@id': `${url}#blog`,
+          url,
+          name: meta.title,
+          description: meta.description,
+          inLanguage: HTML_LANG[lang],
+          author: { '@id': PERSON_ID },
+          isPartOf: { '@id': WEBSITE_ID },
         },
-      ]
+        crumbs([home, { name: lang === 'ru' ? 'Блог' : 'Blog' }]),
+      )
+      break
+
     case 'post': {
       const post = getPost(route.slug)
-      if (!post) return []
-      return [
+      if (!post) break
+      graph.push(
         {
-          '@context': 'https://schema.org',
           '@type': 'BlogPosting',
+          '@id': `${url}#post`,
           headline: post.title[lang],
           description: post.excerpt[lang],
           datePublished: post.date,
           dateModified: post.date,
           inLanguage: HTML_LANG[lang],
           keywords: post.tags.join(', '),
-          author: { '@type': 'Person', name: profile.name[lang], url: SITE.baseUrl },
-          mainEntityOfPage: absolute(pathForRoute(route)),
+          image: absolute(ogImagePath(route)),
+          author: { '@id': PERSON_ID },
+          publisher: { '@id': PERSON_ID },
+          isPartOf: { '@id': WEBSITE_ID },
+          mainEntityOfPage: url,
         },
-      ]
+        crumbs([
+          home,
+          { name: lang === 'ru' ? 'Блог' : 'Blog', path: blogPath(lang) },
+          { name: post.title[lang] },
+        ]),
+      )
+      break
     }
-    default:
+
+    case 'notFound':
       return []
   }
+
+  return [{ '@context': 'https://schema.org', '@graph': graph }]
 }
 
 export function buildHead(route: RouteMatch): HeadData {
@@ -222,8 +322,16 @@ export function buildHead(route: RouteMatch): HeadData {
     lines.push(`<link rel="alternate" hreflang="x-default" href="${absolute(pathForRoute(alternateRoute(route, 'ru')))}" />`)
   }
 
+  // The blog and its posts advertise the feed; Googlebot has crawled feeds for
+  // discovery since 2009.
+  if (route.kind === 'blog' || route.kind === 'post') {
+    lines.push(
+      `<link rel="alternate" type="application/rss+xml" title="${esc(SITE.name[lang])} — Blog" href="${absolute(feedPath(lang))}" />`,
+    )
+  }
+
   const altLocale = OG_LOCALE[lang === 'ru' ? 'en' : 'ru']
-  const imageAlt = esc(SITE.name[lang])
+  const imageAlt = esc(meta.title)
 
   // Open Graph
   lines.push(

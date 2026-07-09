@@ -17,6 +17,9 @@
     <meta name="apple-mobile-web-app-title" content="Iskuzhin" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="yandex-verification" content="bec3e446b999bd2a" />
+    <!-- Google Search Console: add a property at https://search.google.com/search-console,
+         pick the "HTML tag" method and paste its content value below, then Verify.
+    <meta name="google-site-verification" content="PASTE_TOKEN_HERE" /> -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -32,8 +35,43 @@
     </script>
     <title>Aigiz Iskuzhin</title>
     <!--app-head-->
+
+    <!-- Yandex.Metrika counter. `ssr: true` because pages are prerendered.
+         The init call counts the first pageview; client-side navigations are
+         reported by trackPageview() in src/analytics.ts. Keep the counter id in
+         sync with YM_ID there. -->
+    <script>
+      ;(function (m, e, t, r, i, k, a) {
+        m[i] =
+          m[i] ||
+          function () {
+            ;(m[i].a = m[i].a || []).push(arguments)
+          }
+        m[i].l = 1 * new Date()
+        for (var j = 0; j < document.scripts.length; j++) {
+          if (document.scripts[j].src === r) return
+        }
+        ;(k = e.createElement(t)),
+          (a = e.getElementsByTagName(t)[0]),
+          (k.async = 1),
+          (k.src = r),
+          a.parentNode.insertBefore(k, a)
+      })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=110549362', 'ym')
+
+      ym(110549362, 'init', {
+        ssr: true,
+        webvisor: true,
+        clickmap: true,
+        accurateTrackBounce: true,
+        trackLinks: true,
+      })
+    </script>
   </head>
   <body>
+    <noscript
+      ><div>
+        <img src="https://mc.yandex.ru/watch/110549362" style="position: absolute; left: -9999px" alt="" /></div
+    ></noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

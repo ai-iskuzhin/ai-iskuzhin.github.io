@@ -1,6 +1,6 @@
 import type { Lang } from '../content/types'
 import { ui, t } from '../i18n'
-import { socials, profile, prettyHref } from '../content/profile'
+import { socials, profile, legal, prettyHref } from '../content/profile'
 import { librariesPath, verificahubPath, homePath } from '../routes'
 import { Link } from '../router'
 import { SocialIcon } from './SocialIcon'
@@ -31,7 +31,8 @@ export function Footer({ lang }: { lang: Lang }) {
                 data-tip={prettyHref(social.href)}
                 href={social.href}
                 target="_blank"
-                rel="noreferrer"
+                // rel="me" ties these profiles to this identity (IndieWeb / Mastodon verification).
+                rel="me noreferrer"
                 aria-label={`${social.label} — ${prettyHref(social.href)}`}
               >
                 <SocialIcon type={social.type} />
@@ -53,8 +54,8 @@ export function Footer({ lang }: { lang: Lang }) {
 
       {lang === 'ru' ? (
         <p className="site-footer__entity">
-          ИП Айгиз Искужин · ИНН 024803896842 · ОГРНИП 326028000044859 · ОКВЭД 62.01 — Разработка
-          компьютерного программного обеспечения
+          {legal.form[lang]} {profile.name[lang]} · ИНН {legal.inn} · ОГРНИП {legal.ogrnip} · ОКВЭД{' '}
+          {legal.okved} — {legal.okvedLabel[lang]}
         </p>
       ) : null}
     </footer>

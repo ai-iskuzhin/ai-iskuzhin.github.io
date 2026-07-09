@@ -38,8 +38,9 @@ export function LibraryCard({ library, lang }: LibraryCardProps) {
       <p className="library-card__summary">{t(library.summary, lang)}</p>
       <div className="library-card__footer">
         <div className="library-card__badges">
-          <NugetBadge pkg={library.nuget} kind="version" />
-          <NugetBadge pkg={library.nuget} kind="downloads" />
+          {/* The card itself is an <a>, so these must not be anchors too. */}
+          <NugetBadge pkg={library.nuget} kind="version" linked={false} />
+          <NugetBadge pkg={library.nuget} kind="downloads" linked={false} />
         </div>
         <span className="library-card__more">
           {t({ ru: 'Детали', en: 'Details' }, lang)}

@@ -216,6 +216,27 @@ export const socials: SocialLink[] = [
 export const contactEmail = 'aigiz.iskuzhin@yandex.ru'
 export const githubUser = 'ai-iskuzhin'
 
+/**
+ * Sole-proprietor registration data. Already public in ЕГРИП and printed in the
+ * footer. There is no `<meta name="inn">` that any search engine reads; the
+ * machine-readable home for these is schema.org — `taxID` for the ИНН (valid on
+ * Person, not just Organization) and `identifier`/`PropertyValue` for ОГРНИП and
+ * ОКВЭД, which have no native property.
+ */
+export const legal = {
+  form: { ru: 'ИП', en: 'Sole proprietor' } as L,
+  inn: '024803896842',
+  ogrnip: '326028000044859',
+  okved: '62.01',
+  okvedLabel: {
+    ru: 'Разработка компьютерного программного обеспечения',
+    en: 'Computer software development',
+  } as L,
+  city: { ru: 'Уфа', en: 'Ufa' } as L,
+  region: { ru: 'Республика Башкортостан', en: 'Republic of Bashkortostan' } as L,
+  country: 'RU',
+}
+
 /** A short, human-readable destination for a link (used in tooltips). */
 export function prettyHref(href: string): string {
   return href

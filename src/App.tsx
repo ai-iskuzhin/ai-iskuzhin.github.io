@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { matchRoute } from './routes'
 import { useRouter } from './router'
 import { applyHead } from './head'
+import { trackPageview } from './analytics'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
 import { Home } from './pages/Home'
@@ -38,6 +39,8 @@ export default function App() {
 
   useEffect(() => {
     applyHead(route)
+    // After applyHead, so Metrika reports the destination page's title.
+    trackPageview()
     // Scroll to a hash target once the destination page has rendered.
     if (typeof window !== 'undefined' && window.location.hash) {
       const target = document.getElementById(window.location.hash.slice(1))

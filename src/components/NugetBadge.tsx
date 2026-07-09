@@ -1,18 +1,28 @@
 type NugetBadgeProps = {
   pkg: string
   kind: 'version' | 'downloads'
+  /**
+   * Wrap the badge in a link to nuget.org. Must be false when the badge is
+   * already inside an <a> (e.g. LibraryCard): nested anchors are invalid HTML,
+   * and the parser's recovery reshapes the DOM enough to break hydration.
+   */
+  linked?: boolean
 }
 
 /** Live NuGet badge via shields.io. Reads the published package state at request time. */
-export function NugetBadge({ pkg, kind }: NugetBadgeProps) {
+export function NugetBadge({ pkg, kind, linked = true }: NugetBadgeProps) {
   const src =
     kind === 'version'
       ? `https://img.shields.io/nuget/v/${pkg}?logo=nuget&logoColor=white&label=nuget&color=004880&style=flat-square`
       : `https://img.shields.io/nuget/dt/${pkg}?label=downloads&color=7C3AED&style=flat-square`
   const alt = kind === 'version' ? `${pkg} version on NuGet` : `${pkg} downloads on NuGet`
+  const image = <img src={src} alt={alt} loading="lazy" decoding="async" height={20} />
+
+  if (!linked) return <span className="nuget-badge">{image}</span>
+
   return (
     <a className="nuget-badge" href={`https://www.nuget.org/packages/${pkg}`} target="_blank" rel="noreferrer">
-      <img src={src} alt={alt} loading="lazy" decoding="async" height={20} />
+      {image}
     </a>
   )
 }

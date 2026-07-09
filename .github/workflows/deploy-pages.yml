@@ -54,3 +54,24 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      # Tell IndexNow the pages changed. One endpoint fans out to Yandex, Bing,
+      # Seznam and Naver. Google does not participate — it relies on the sitemap.
+      # Never fail the deploy over this.
+      - name: Ping IndexNow
+        continue-on-error: true
+        env:
+          HOST: ai-iskuzhin.is-a.dev
+          INDEXNOW_KEY: ae760c638b5161fb98e364590c7e5be5
+        run: |
+          urls=$(curl -fsS --retry 3 "https://$HOST/sitemap.xml" \
+            | grep -o '<loc>[^<]*</loc>' | sed 's|</\?loc>||g' \
+            | jq -R . | jq -s .)
+          count=$(echo "$urls" | jq 'length')
+          if [ "$count" -eq 0 ]; then echo "no URLs found in sitemap"; exit 1; fi
+          echo "submitting $count URLs"
+          jq -n --arg host "$HOST" --arg key "$INDEXNOW_KEY" --argjson urlList "$urls" \
+            '{host: $host, key: $key, urlList: $urlList}' \
+            | curl -fsS -X POST "https://api.indexnow.org/indexnow" \
+                -H 'Content-Type: application/json; charset=utf-8' \
+                --data @- -w '\nIndexNow HTTP %{http_code}\n'

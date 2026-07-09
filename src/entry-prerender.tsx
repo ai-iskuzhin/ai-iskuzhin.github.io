@@ -9,20 +9,33 @@ import App from './App'
 import { RouterProvider } from './router'
 import { pathForRoute, type RouteMatch } from './routes'
 
-export { allRoutes, pathForRoute, ogImagePath, SITE } from './routes'
+export { allRoutes, pathForRoute, ogImagePath, feedPath, SITE } from './routes'
 export { buildHead } from './seo'
 // Consumed by scripts/og.mjs so the cards read from the app's own content.
 export { libraries } from './content/libraries'
 export { posts } from './content/posts'
 export { profile } from './content/profile'
 
-/** Render a route to static HTML for the `<div id="root">` shell. */
-export function renderPage(route: RouteMatch): string {
-  return renderToString(
+/**
+ * Render a route to static HTML.
+ *
+ * React 19 discovers `<img>` sources and hoists `<link rel="preload">` for them
+ * to the front of the rendered output. renderToString has no document to hoist
+ * into, so they land inside `#root` — where the client never puts them, which
+ * fails hydration. Lift them out and let the caller place them in `<head>`,
+ * which is where they belong anyway.
+ */
+export function renderPage(route: RouteMatch): { head: string; body: string } {
+  const html = renderToString(
     <StrictMode>
       <RouterProvider initialPath={pathForRoute(route)}>
         <App />
       </RouterProvider>
     </StrictMode>,
   )
+
+  const hoisted = html.match(/^(?:<link\b[^>]*>)+/)
+  if (!hoisted) return { head: '', body: html }
+
+  return { head: hoisted[0], body: html.slice(hoisted[0].length) }
 }
