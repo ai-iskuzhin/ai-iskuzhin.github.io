@@ -160,9 +160,38 @@ export type Project = {
   notes?: L[]
   stack: string[]
   links: { label: string; href: string }[]
+  /** The flagship product. It has its own page and its own card, so the ticker skips it here. */
+  flagship?: boolean
 }
 
 export const projects: Project[] = [
+  {
+    title: { ru: 'VerificaHub', en: 'VerificaHub' },
+    flagship: true,
+    description: {
+      ru: 'Платформа верификации пользователей: звонки, SMS, голос, мессенджеры и многое другое — в одном API.',
+      en: 'A user-verification platform: calls, SMS, voice, social apps and more — in one API.',
+    },
+    notes: [
+      {
+        ru: 'v1 — входящая верификация по flash-call: пользователь звонит на выданный номер, звонок сбрасывается, а caller-id сопоставляется с открытой сессией.',
+        en: 'v1 ships inbound flash-call verification: the user dials a number we hand out, the call is rejected, and the caller-id is matched to an open session.',
+      },
+      {
+        ru: 'Без исходящих вызовов и без ответа на звонок — дешевле и надёжнее классической отправки SMS.',
+        en: 'No outbound dialing and no answered calls — cheaper and more reliable than classic SMS delivery.',
+      },
+      {
+        ru: 'Каналы: звонки (flash-call), SMS, голосовые сообщения, мессенджеры и социальные приложения.',
+        en: 'Channels: calls (flash-call), SMS, voice messages, messengers and social apps.',
+      },
+    ],
+    stack: ['ASP.NET Core', 'FastEndpoints', 'EF Core 10', 'PostgreSQL', 'Redis', 'Docker', 'React'],
+    links: [
+      { label: 'verificahub.ru', href: 'https://verificahub.ru' },
+      { label: 'github.com/verificahub', href: 'https://github.com/verificahub' },
+    ],
+  },
   {
     title: { ru: 'Moonlume VPN', en: 'Moonlume VPN' },
     description: {
@@ -215,6 +244,13 @@ export const socials: SocialLink[] = [
 ]
 
 export const contactEmail = 'aigiz.iskuzhin@yandex.ru'
+
+/** E.164 for the `tel:` href and schema.org; the display form is for humans. */
+export const contactPhone = { tel: '+79279383562', display: '+7 927 938-35-62' }
+
+/** The direct-message channels surfaced on the contact card. */
+export const contactTelegram = 'https://t.me/mrx_eternal'
+export const contactVk = 'https://vk.ru/mrx_eternal'
 
 /**
  * Sole-proprietor registration data. Already public in ЕГРИП and printed in the

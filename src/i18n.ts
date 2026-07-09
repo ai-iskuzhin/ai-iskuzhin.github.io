@@ -61,6 +61,10 @@ export const ui = {
       en: 'Drop a short note about the task, timeline and context — I prefer direct, concrete communication.',
     },
     write: { ru: 'Написать', en: 'Email me' },
+    call: { ru: 'Позвонить', en: 'Call me' },
+    telegram: { ru: 'Telegram', en: 'Telegram' },
+    vk: { ru: 'ВКонтакте', en: 'VK' },
+    or: { ru: 'или напишите в мессенджер', en: 'or message me' },
   },
   footer: {
     rights: { ru: 'Все права защищены.', en: 'All rights reserved.' },

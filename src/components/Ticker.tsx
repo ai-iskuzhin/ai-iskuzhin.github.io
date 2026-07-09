@@ -28,6 +28,8 @@ function buildItems(lang: Lang): Item[] {
   items.push({ kind: 'link', label: 'VerificaHub', to: verificahubPath(lang), icon: '/logos/verificahub.svg' })
 
   for (const project of projects) {
+    // VerificaHub is already above as an internal link; don't list it twice.
+    if (project.flagship) continue
     const href = project.links[0]?.href
     if (href) items.push({ kind: 'external', label: t(project.title, lang), href })
   }

@@ -1,5 +1,5 @@
 import type { SocialLink } from '../content/profile'
-import { GitHubIcon, TelegramIcon, VkIcon, HhIcon, MailIcon } from './Icons'
+import { GitHubIcon, TelegramIcon, VkIcon, HhIcon, MailIcon, PhoneIcon } from './Icons'
 
 export function SocialIcon({ type }: { type: SocialLink['type'] }) {
   switch (type) {
@@ -12,8 +12,9 @@ export function SocialIcon({ type }: { type: SocialLink['type'] }) {
     case 'hh':
       return <HhIcon />
     case 'email':
-    case 'phone':
       return <MailIcon />
+    case 'phone':
+      return <PhoneIcon />
     default:
       return null
   }

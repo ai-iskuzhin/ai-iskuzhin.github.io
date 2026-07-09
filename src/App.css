@@ -1000,6 +1000,28 @@ main#main {
 
 .project-card h3 {
   font-size: 1.18rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* VerificaHub also has its own section above; the badge says the repeat is deliberate. */
+.project-card--flagship {
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--line));
+}
+
+.project-card__badge {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 999px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
 .project-card > p {
@@ -1154,15 +1176,36 @@ main#main {
   color: var(--muted);
 }
 
-.contact__card .btn {
-  margin-top: 26px;
+.contact__actions {
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.contact__or {
+  margin-top: 20px;
+  font-size: 0.85rem;
+  color: var(--muted);
 }
 
 .contact__email {
-  margin-top: 16px;
+  margin-top: 20px;
   font-family: var(--mono);
   font-size: 0.9rem;
   color: var(--muted);
+}
+
+.contact__email a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+}
+
+.contact__email a:hover {
+  color: var(--accent);
+  border-bottom-color: currentColor;
 }
 
 /* ============================================================

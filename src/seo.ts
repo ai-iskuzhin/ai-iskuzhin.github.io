@@ -1,7 +1,7 @@
 import type { Lang } from './content/types'
 import { getLibrary, libraries } from './content/libraries'
 import { getPost } from './content/posts'
-import { contactEmail, legal, profile, socials } from './content/profile'
+import { contactEmail, contactPhone, legal, profile, socials } from './content/profile'
 import {
   SITE,
   LANGS,
@@ -126,6 +126,7 @@ function personNode(lang: Lang): object {
     url: SITE.baseUrl,
     image: absolute('/me.jpg'),
     email: `mailto:${contactEmail}`,
+    telephone: contactPhone.tel,
     sameAs: socials.filter((s) => /^https?:/.test(s.href)).map((s) => s.href),
     knowsAbout: ['.NET', 'C#', 'ASP.NET Core', 'PostgreSQL', 'Payments', 'Fintech', 'Backend'],
     address: {

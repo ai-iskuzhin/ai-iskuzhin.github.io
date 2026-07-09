@@ -1,6 +1,16 @@
 import type { Lang } from '../content/types'
 import { ui, t } from '../i18n'
-import { profile, experience, projects, socials, contactEmail, prettyHref } from '../content/profile'
+import {
+  profile,
+  experience,
+  projects,
+  socials,
+  contactEmail,
+  contactPhone,
+  contactTelegram,
+  contactVk,
+  prettyHref,
+} from '../content/profile'
 import { libraries } from '../content/libraries'
 import { librariesPath, verificahubPath } from '../routes'
 import { Link } from '../router'
@@ -9,7 +19,7 @@ import { SocialIcon } from '../components/SocialIcon'
 import { Ticker } from '../components/Ticker'
 import { Typewriter } from '../components/Typewriter'
 import { VerificaHubLogo, VerificaHubWordmark } from '../components/VerificaHubLogo'
-import { ArrowIcon, ExternalIcon, MailIcon } from '../components/Icons'
+import { ArrowIcon, ExternalIcon, MailIcon, PhoneIcon, TelegramIcon, VkIcon } from '../components/Icons'
 
 const packageCount = libraries.reduce((total, lib) => total + 1 + (lib.nugetFamily?.length ?? 0), 0)
 
@@ -228,8 +238,16 @@ export function Home({ lang }: { lang: Lang }) {
         </div>
         <div className="project-grid">
           {projects.map((project) => (
-            <article className="project-card" key={project.title.en}>
-              <h3>{t(project.title, lang)}</h3>
+            <article
+              className={`project-card${project.flagship ? ' project-card--flagship' : ''}`}
+              key={project.title.en}
+            >
+              <h3>
+                {t(project.title, lang)}
+                {project.flagship ? (
+                  <span className="project-card__badge">{t(ui.sections.flagship, lang)}</span>
+                ) : null}
+              </h3>
               <p>{t(project.description, lang)}</p>
               {project.notes ? (
                 <ul className="bullets bullets--compact">
@@ -244,6 +262,12 @@ export function Home({ lang }: { lang: Lang }) {
                 ))}
               </ul>
               <div className="project-card__links">
+                {project.flagship ? (
+                  <Link to={verificahubPath(lang)}>
+                    {t({ ru: 'Подробнее', en: 'Learn more' }, lang)}
+                    <ArrowIcon />
+                  </Link>
+                ) : null}
                 {project.links.map((link) => (
                   <a key={link.href} href={link.href} target="_blank" rel="noreferrer">
                     {link.label}
@@ -261,11 +285,36 @@ export function Home({ lang }: { lang: Lang }) {
           <p className="section__kicker">{t(ui.sections.contact, lang)}</p>
           <h2>{t(ui.contact.heading, lang)}</h2>
           <p>{t(ui.contact.body, lang)}</p>
-          <a className="btn btn--primary" href={`mailto:${contactEmail}`}>
-            <MailIcon />
-            {t(ui.contact.write, lang)}
-          </a>
-          <p className="contact__email">{contactEmail}</p>
+
+          <div className="contact__actions">
+            <a className="btn btn--primary" href={`tel:${contactPhone.tel}`}>
+              <PhoneIcon />
+              {t(ui.contact.call, lang)}
+            </a>
+            <a className="btn btn--ghost" href={`mailto:${contactEmail}`}>
+              <MailIcon />
+              {t(ui.contact.write, lang)}
+            </a>
+          </div>
+
+          <p className="contact__or">{t(ui.contact.or, lang)}</p>
+
+          <div className="contact__actions">
+            <a className="btn btn--ghost" href={contactTelegram} target="_blank" rel="me noreferrer">
+              <TelegramIcon />
+              {t(ui.contact.telegram, lang)}
+            </a>
+            <a className="btn btn--ghost" href={contactVk} target="_blank" rel="me noreferrer">
+              <VkIcon />
+              {t(ui.contact.vk, lang)}
+            </a>
+          </div>
+
+          <p className="contact__email">
+            <a href={`tel:${contactPhone.tel}`}>{contactPhone.display}</a>
+            <span aria-hidden="true"> · </span>
+            <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+          </p>
         </div>
       </section>
     </>
