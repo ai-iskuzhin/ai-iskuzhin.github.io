@@ -4,10 +4,18 @@
     <meta charset="UTF-8" />
     <!-- favicon.svg is a base64 raster in an <svg> wrapper (188 KB, no vector
          paths), so it is not linked: the .ico and the 96px PNG look identical
-         for a fraction of the bytes. -->
-    <link rel="icon" href="/favicon.ico" sizes="32x32 48x48" />
-    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+         for a fraction of the bytes.
+
+         ?v= is a cache-buster. Safari keeps a per-host favicon cache that
+         ignores HTTP caching, so an icon replaced at the same URL can stay
+         stale indefinitely. Bump the number whenever the artwork changes.
+         /favicon.ico still resolves without the query, for crawlers and RSS
+         readers that probe the root path directly.
+
+         The .ico really does contain 16/32/48; sizes must say so. -->
+    <link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png?v=2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
