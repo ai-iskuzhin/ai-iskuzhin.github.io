@@ -160,32 +160,59 @@ export function Home({ lang }: { lang: Lang }) {
 
       <section className="section" id="flagship">
         <div className="section__head">
-          <p className="section__kicker">{t(ui.sections.flagship, lang)}</p>
+          <p className="section__kicker">{t(ui.sections.flagships, lang)}</p>
         </div>
-        <Link to={verificahubPath(lang)} className="flagship-card">
-          <VerificaHubLogo size={68} />
-          <div className="flagship-card__body">
-            <h3><VerificaHubWordmark size={26} /></h3>
-            <p>
-              {t(
-                {
-                  ru: 'Платформа верификации пользователей: звонки, SMS, голос, мессенджеры и многое другое — в одном API.',
-                  en: 'A user-verification platform: calls, SMS, voice, social apps and more — in one API.',
-                },
-                lang,
-              )}
-            </p>
-            <div className="flagship-card__stack">
-              {['ASP.NET Core', 'FastEndpoints', 'EF Core 10', 'PostgreSQL', 'Redis'].map((item) => (
-                <span key={item}>{item}</span>
-              ))}
+        <div className="flagship-grid">
+          <Link to={verificahubPath(lang)} className="flagship-card">
+            <VerificaHubLogo size={68} />
+            <div className="flagship-card__body">
+              <h3><VerificaHubWordmark size={26} /></h3>
+              <p>
+                {t(
+                  {
+                    ru: 'Платформа верификации пользователей: звонки, SMS, голос, мессенджеры и многое другое — в одном API.',
+                    en: 'A user-verification platform: calls, SMS, voice, social apps and more — in one API.',
+                  },
+                  lang,
+                )}
+              </p>
+              <div className="flagship-card__stack">
+                {['ASP.NET Core', 'FastEndpoints', 'EF Core 10', 'PostgreSQL', 'Redis'].map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </div>
             </div>
-          </div>
-          <span className="flagship-card__more">
-            {t({ ru: 'Подробнее', en: 'Learn more' }, lang)}
-            <ArrowIcon />
-          </span>
-        </Link>
+            <span className="flagship-card__more">
+              {t({ ru: 'Подробнее', en: 'Learn more' }, lang)}
+              <ArrowIcon />
+            </span>
+          </Link>
+
+          <a href="https://pir2pir.ru" target="_blank" rel="noreferrer" className="flagship-card">
+            <span className="flagship-card__mono" aria-hidden="true">П2П</span>
+            <div className="flagship-card__body">
+              <h3>{t({ ru: 'Пир2Пир', en: 'Pir2Pir' }, lang)}</h3>
+              <p>
+                {t(
+                  {
+                    ru: 'Сервис для студентов Школы 21: находит участника, который проверит ваш проект, и даёт место, где об этом договориться. Построен на моём SDK School21Net.',
+                    en: 'A service for School 21 students: it finds a peer to review your project and a place to arrange it. Built on my School21Net SDK.',
+                  },
+                  lang,
+                )}
+              </p>
+              <div className="flagship-card__stack">
+                {['ASP.NET Core', 'PostgreSQL', 'School21Net', 'Telegram', 'MAX'].map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </div>
+            </div>
+            <span className="flagship-card__more">
+              pir2pir.ru
+              <ExternalIcon />
+            </span>
+          </a>
+        </div>
       </section>
 
       <section className="section" id="experience">
@@ -262,7 +289,7 @@ export function Home({ lang }: { lang: Lang }) {
                 ))}
               </ul>
               <div className="project-card__links">
-                {project.flagship ? (
+                {project.hasDetailPage ? (
                   <Link to={verificahubPath(lang)}>
                     {t({ ru: 'Подробнее', en: 'Learn more' }, lang)}
                     <ArrowIcon />

@@ -736,6 +736,12 @@ main#main {
 /* ============================================================
    Flagship card
    ============================================================ */
+.flagship-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
 .flagship-card {
   display: flex;
   align-items: center;
@@ -774,6 +780,23 @@ main#main {
 .flagship-card__icon svg {
   width: 30px;
   height: 30px;
+}
+
+/* Monogram tile for a product without a bespoke logo (Пир2Пир). */
+.flagship-card__mono {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 68px;
+  height: 68px;
+  border-radius: 20px;
+  font-family: 'Unbounded', var(--sans);
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: -0.03em;
+  color: #fff;
+  background: linear-gradient(135deg, #00c2a8, #2563eb);
+  box-shadow: 0 12px 26px rgba(37, 99, 235, 0.32);
 }
 
 .flagship-card__body {

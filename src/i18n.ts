@@ -31,6 +31,7 @@ export const ui = {
       en: 'MIT-licensed libraries that keep dependencies to a minimum. Just HttpClient and System.Text.Json, multi-targeting netstandard2.0 · net8.0 · net10.0.',
     },
     flagship: { ru: 'Флагманский продукт', en: 'Flagship product' },
+    flagships: { ru: 'Флагманские продукты', en: 'Flagship products' },
     experience: { ru: 'Опыт работы', en: 'Work experience' },
     projects: { ru: 'Проекты', en: 'Projects' },
     blog: { ru: 'Блог', en: 'Blog' },

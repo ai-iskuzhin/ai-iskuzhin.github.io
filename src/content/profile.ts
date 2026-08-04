@@ -160,14 +160,17 @@ export type Project = {
   notes?: L[]
   stack: string[]
   links: { label: string; href: string }[]
-  /** The flagship product. It has its own page and its own card, so the ticker skips it here. */
+  /** A flagship product — featured in its own section and skipped by the ticker loop. */
   flagship?: boolean
+  /** Has an internal detail page (/verificahub); drives the "Learn more" link. */
+  hasDetailPage?: boolean
 }
 
 export const projects: Project[] = [
   {
     title: { ru: 'VerificaHub', en: 'VerificaHub' },
     flagship: true,
+    hasDetailPage: true,
     description: {
       ru: 'Платформа верификации пользователей: звонки, SMS, голос, мессенджеры и многое другое — в одном API.',
       en: 'A user-verification platform: calls, SMS, voice, social apps and more — in one API.',
@@ -194,6 +197,7 @@ export const projects: Project[] = [
   },
   {
     title: { ru: 'Пир2Пир', en: 'Pir2Pir' },
+    flagship: true,
     description: {
       ru: 'Сервис для студентов Школы 21: находит участника, который проверит ваш проект, и даёт место, где об этом договориться.',
       en: 'A service for School 21 students: it finds a peer to review your project and gives you a place to arrange it.',

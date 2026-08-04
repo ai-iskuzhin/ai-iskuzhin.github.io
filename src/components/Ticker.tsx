@@ -26,9 +26,10 @@ function buildItems(lang: Lang): Item[] {
     items.push({ kind: 'link', label: library.name, to: libraryPath(lang, library.slug), icon: library.icon })
   }
   items.push({ kind: 'link', label: 'VerificaHub', to: verificahubPath(lang), icon: '/logos/verificahub.svg' })
+  items.push({ kind: 'external', label: t({ ru: 'Пир2Пир', en: 'Pir2Pir' }, lang), href: 'https://pir2pir.ru' })
 
   for (const project of projects) {
-    // VerificaHub is already above as an internal link; don't list it twice.
+    // Flagship products are listed above already; don't repeat them here.
     if (project.flagship) continue
     const href = project.links[0]?.href
     if (href) items.push({ kind: 'external', label: t(project.title, lang), href })
