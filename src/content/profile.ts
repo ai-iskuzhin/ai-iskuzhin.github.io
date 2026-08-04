@@ -193,6 +193,32 @@ export const projects: Project[] = [
     ],
   },
   {
+    title: { ru: 'Пир2Пир', en: 'Pir2Pir' },
+    description: {
+      ru: 'Сервис для студентов Школы 21: находит участника, который проверит ваш проект, и даёт место, где об этом договориться.',
+      en: 'A service for School 21 students: it finds a peer to review your project and gives you a place to arrange it.',
+    },
+    notes: [
+      {
+        ru: 'Автоподбор: подходящих кандидатов спрашивают автоматически, поиск останавливается на первом согласии. Личность запрашивающего при подборе скрыта.',
+        en: 'Auto-matching: suitable candidates are asked automatically and the search stops at the first “yes”. The requester stays anonymous during matching.',
+      },
+      {
+        ru: 'Веб-приложение, Telegram- и MAX-боты с единым аккаунтом. Вход по коду со школьной почты, без обмена контактами; чаты одноразовые.',
+        en: 'Web app plus Telegram and MAX bots on one account. Code login via school email, no contact sharing, and chats are ephemeral.',
+      },
+      {
+        ru: 'Построен на моём открытом SDK School21Net поверх официального API Школы 21.',
+        en: 'Built on my open-source School21Net SDK over the official School 21 API.',
+      },
+    ],
+    stack: ['ASP.NET Core', 'PostgreSQL', 'School21Net', 'Telegram', 'MAX', 'React'],
+    links: [
+      { label: 'pir2pir.ru', href: 'https://pir2pir.ru' },
+      { label: 't.me/pir2pirbot', href: 'https://t.me/pir2pirbot' },
+    ],
+  },
+  {
     title: { ru: 'Moonlume VPN', en: 'Moonlume VPN' },
     description: {
       ru: 'Сервис интернет-приватности: безопасное подключение, защита трафика и удобное управление доступом.',

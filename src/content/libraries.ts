@@ -541,6 +541,178 @@ else
       { name: 'ToRsqlPageAsync', desc: { ru: 'Подсчёт и материализация страницы', en: 'Count and materialize a page' } },
     ],
   },
+  {
+    slug: 'yandexnet-metrika',
+    name: 'YandexNet.Metrika',
+    repo: 'YandexNet.Metrika',
+    nuget: 'YandexNet.Metrika',
+    docsUrl: 'https://yandex.ru/dev/metrika/',
+    docsLabel: { ru: 'Документация Метрики', en: 'Metrika API docs' },
+    category: { ru: 'Аналитика', en: 'Analytics' },
+    icon: '/logos/yandexnet-metrika.png',
+    accent: ['#FC3F1D', '#2563EB'],
+    logo: 'nuget',
+    tagline: {
+      ru: '.NET SDK для API Яндекс Метрики',
+      en: '.NET SDK for the Yandex Metrika API',
+    },
+    summary: {
+      ru: 'Цели, офлайн-конверсии (серверная атрибуция выручки) и отчёты. Полностью stateless: SDK не хранит и не обновляет токены — жизненным циклом владеет ваша интеграция. Есть helpers для OAuth 2.0, но можно передать уже готовый токен. Единственная зависимость — System.Text.Json.',
+      en: 'Goals, offline conversions (server-side revenue attribution) and reports. Fully stateless: the SDK never stores or refreshes tokens — your integration owns the lifecycle. OAuth 2.0 helpers are included, or bring a token you already have. Its only dependency is System.Text.Json.',
+    },
+    targets: ['netstandard2.0', 'net8.0', 'net10.0'],
+    license: 'MIT',
+    language: 'C#',
+    install: 'dotnet add package YandexNet.Metrika',
+    quickstart: {
+      language: 'csharp',
+      code: `using YandexNet.Metrika;
+
+using var http = new HttpClient();
+
+// Bring your own token — no OAuth round-trip needed.
+var metrika = new YandexMetrikaClient(http, new YandexMetrikaClientOptions
+{
+    AccessToken = accessToken,
+});
+
+var goals = await metrika.ListGoalsAsync(counterId);
+
+var created = await metrika.CreateGoalAsync(counterId, new MetrikaGoal
+{
+    Name = "app_open",
+    Type = "action",
+    Conditions = new[] { new MetrikaGoalCondition { Type = "exact", Url = "app_open" } },
+});`,
+    },
+    features: [
+      { ru: 'Цели: список, создание, изменение и удаление', en: 'Goals: list, create, update and delete' },
+      { ru: 'Загрузка офлайн-конверсий с серверной атрибуцией выручки', en: 'Offline-conversion upload with server-side revenue attribution' },
+      { ru: 'Чтение отчётов', en: 'Reading reports' },
+      { ru: 'OAuth 2.0 helpers или собственный токен', en: 'OAuth 2.0 helpers or bring-your-own token' },
+      { ru: 'Stateless, единственная зависимость — System.Text.Json', en: 'Stateless, only depends on System.Text.Json' },
+    ],
+    methods: [
+      { name: 'ListGoalsAsync', desc: { ru: 'Список целей счётчика', en: 'List a counter’s goals' } },
+      { name: 'CreateGoalAsync', desc: { ru: 'Создание цели', en: 'Create a goal' } },
+      { name: 'UploadOfflineConversionsAsync', desc: { ru: 'Загрузка офлайн-конверсий', en: 'Upload offline conversions' } },
+      { name: 'BuildAuthorizeUrl', desc: { ru: 'Ссылка на OAuth-авторизацию', en: 'Build the OAuth authorize URL' } },
+      { name: 'ExchangeCodeAsync', desc: { ru: 'Обмен кода на токены', en: 'Exchange the code for tokens' } },
+    ],
+  },
+  {
+    slug: 'rocketnet-chat',
+    name: 'RocketNet.Chat',
+    repo: 'RocketNet.Chat',
+    nuget: 'RocketNet.Chat',
+    docsUrl: 'https://developer.rocket.chat/apidocs',
+    docsLabel: { ru: 'Документация Rocket.Chat', en: 'Rocket.Chat API docs' },
+    category: { ru: 'Мессенджеры', en: 'Messaging' },
+    icon: '/logos/rocketnet-chat.png',
+    accent: ['#F5455C', '#2563EB'],
+    logo: 'nuget',
+    tagline: {
+      ru: 'Неофициальный .NET SDK для Rocket.Chat',
+      en: 'Unofficial .NET SDK for Rocket.Chat',
+    },
+    summary: {
+      ru: 'Найти пользователя по логину или email, открыть личный чат и отправить сообщение — одним вызовом или по шагам. Плюс чтение истории комнат, счётчики непрочитанного, отметки «прочитано / непрочитано» и кастомные эмодзи.',
+      en: 'Find a user by username or email, open the private chat and post a message — in one call or step by step. Plus room history, unread counters, read/unread marks and custom emoji.',
+    },
+    targets: ['netstandard2.0', 'net8.0', 'net10.0'],
+    license: 'MIT',
+    language: 'C#',
+    install: 'dotnet add package RocketNet.Chat',
+    quickstart: {
+      language: 'csharp',
+      code: `using RocketNet.Chat;
+
+using var httpClient = new HttpClient();
+
+var client = new RocketChatClient(httpClient, new RocketChatClientOptions
+{
+    BaseAddress = new Uri("https://chat.example.com/"),
+    UserId = "rbAXPnMktTFbNpwtJ",
+    AuthToken = "RScctEHSmLGZ...",
+});
+
+// Look the user up, open the private chat and post into it — one call.
+var posted = await client.SendDirectMessageAsync(
+    RocketChatUserQuery.ByEmail("kim@example.com"),
+    "Deploy finished ✅");
+
+Console.WriteLine(posted.Message?.RoomId);`,
+    },
+    features: [
+      { ru: 'Поиск пользователя по логину, email или id', en: 'Find a user by username, email or id' },
+      { ru: 'Открытие личного чата и отправка сообщения', en: 'Open the direct chat and post a message' },
+      { ru: 'Чтение истории комнат и счётчиков непрочитанного', en: 'Read room history and unread counters' },
+      { ru: 'Отметки «прочитано / непрочитано»', en: 'Mark rooms read / unread' },
+      { ru: 'Кастомные эмодзи и абсолютные ссылки на вложения', en: 'Custom emoji and absolute media URLs' },
+    ],
+    methods: [
+      { name: 'SendDirectMessageAsync', desc: { ru: 'Найти, открыть чат и отправить — одним вызовом', en: 'Find, open the chat and post — in one call' } },
+      { name: 'FindUserAsync', desc: { ru: 'Поиск пользователя', en: 'Find a user' } },
+      { name: 'CreateDirectMessageAsync', desc: { ru: 'Открытие личного чата', en: 'Open the private chat' } },
+      { name: 'PostMessageAsync', desc: { ru: 'Отправка сообщения', en: 'Post a message' } },
+      { name: 'GetHistoryAsync', desc: { ru: 'История комнаты', en: 'Room history' } },
+    ],
+  },
+  {
+    slug: 'school21net',
+    name: 'School21Net',
+    repo: 'School21Net',
+    nuget: 'School21Net',
+    docsUrl: 'https://github.com/ai-iskuzhin/School21Net#readme',
+    docsLabel: { ru: 'README на GitHub', en: 'README on GitHub' },
+    category: { ru: 'API-клиент', en: 'API client' },
+    icon: '/logos/school21net.png',
+    accent: ['#00C2A8', '#2563EB'],
+    logo: 'nuget',
+    tagline: {
+      ru: 'Типизированный .NET-клиент для API Школы 21',
+      en: 'Typed .NET client for the School 21 API',
+    },
+    summary: {
+      ru: 'Участники, проекты (завершённые / на проверке), кампусы и коалиции из официального публичного API Школы 21 — без сторонних зависимостей. Авторизацией владеет интеграция (ROPC + refresh), списки участников проекта фильтруются по статусу. На этом SDK построен продукт Пир2Пир.',
+      en: 'Participants, projects (finished / in review), campuses and coalitions from the official School 21 public API — no third-party dependencies. The integrator owns auth (ROPC + refresh) and per-project participant lists filter by status. It powers the Pir2Pir product.',
+    },
+    targets: ['net8.0', 'net10.0'],
+    license: 'MIT',
+    language: 'C#',
+    install: 'dotnet add package School21Net',
+    quickstart: {
+      language: 'csharp',
+      code: `using School21Net;
+using School21Net.Authentication;
+
+var http = new HttpClient();
+
+// 1) Authenticate on your side — the SDK never stores your credentials.
+var auth = new School21AuthClient(http);
+var token = await auth.AuthenticateAsync("your-login", "your-password", ct);
+
+var client = new School21Client(http, new School21ClientOptions(),
+    new StaticAccessTokenProvider(token.AccessToken));
+
+// Who finished a project — and who is waiting for a reviewer on it?
+var finishers = await client.Projects.GetParticipantsAsync(73465, ParticipantProjectStatus.Accepted);
+var awaiting  = await client.Projects.GetParticipantsAsync(73465, ParticipantProjectStatus.InReviews);`,
+    },
+    features: [
+      { ru: 'Участники, проекты, кампусы и коалиции', en: 'Participants, projects, campuses and coalitions' },
+      { ru: 'Фильтр участников проекта: завершили / ждут проверки', en: 'Per-project filter: finished / awaiting review' },
+      { ru: 'Авторизация на стороне интеграции (ROPC + refresh)', en: 'Integrator-owned auth (ROPC + refresh)' },
+      { ru: 'Без сторонних зависимостей', en: 'No third-party dependencies' },
+      { ru: 'Многоуровневые исключения протокола / транспорта', en: 'Layered protocol / transport exceptions' },
+    ],
+    methods: [
+      { name: 'Projects.GetParticipantsAsync', desc: { ru: 'Участники проекта по статусу', en: 'Project participants by status' } },
+      { name: 'Participants.GetAsync', desc: { ru: 'Профиль участника', en: 'A participant’s profile' } },
+      { name: 'Participants.GetProjectsAsync', desc: { ru: 'Проекты участника', en: 'A participant’s projects' } },
+      { name: 'AuthenticateAsync', desc: { ru: 'Получение токена (ROPC)', en: 'Obtain a token (ROPC)' } },
+    ],
+  },
 ]
 
 export function getLibrary(slug: string): Library | undefined {
