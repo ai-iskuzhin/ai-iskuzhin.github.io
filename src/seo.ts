@@ -92,6 +92,16 @@ export function metaFor(route: RouteMatch): Meta {
         ),
         type: 'website',
       }
+    case 'pir2pir':
+      return {
+        title: lang === 'ru' ? `Пир2Пир — найти пира для проверки проекта Школы 21` : `Pir2Pir — find a peer to review your School 21 project`,
+        description: clamp(
+          lang === 'ru'
+            ? 'Платформа взаимных проверок для участников Школы 21: назовите проект — платформа сама спросит подходящих пиров и откроет чат при согласии. Продукт Айгиза Искужина на SDK School21Net.'
+            : 'A peer-review platform for School 21 students: name a project and it asks suitable peers for you, opening a chat on the first yes. A product by Aigiz Iskuzhin, built on the School21Net SDK.',
+        ),
+        type: 'website',
+      }
     case 'blog':
       return {
         title: lang === 'ru' ? `Блог — ${name}` : `Blog — ${name}`,
@@ -240,6 +250,22 @@ function jsonLdFor(route: RouteMatch): object[] {
         url: 'https://verificahub.ru',
         description: meta.description,
         founder: { '@id': PERSON_ID },
+      })
+      break
+
+    case 'pir2pir':
+      graph.push(page('WebPage'), crumbs([home, { name: 'Пир2Пир' }]), {
+        '@type': 'WebApplication',
+        '@id': 'https://pir2pir.ru/#app',
+        name: 'Пир2Пир',
+        alternateName: 'Pir2Pir',
+        url: 'https://pir2pir.ru',
+        applicationCategory: 'EducationalApplication',
+        operatingSystem: 'Web, Telegram, MAX',
+        inLanguage: ['ru', 'en', 'uz'],
+        description: meta.description,
+        offers: { '@type': 'Offer', price: 0, priceCurrency: 'RUB' },
+        author: { '@id': PERSON_ID },
       })
       break
 

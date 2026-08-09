@@ -18,6 +18,7 @@ export type RouteMatch =
   | { kind: 'libraries'; lang: Lang }
   | { kind: 'library'; lang: Lang; slug: string }
   | { kind: 'verificahub'; lang: Lang }
+  | { kind: 'pir2pir'; lang: Lang }
   | { kind: 'blog'; lang: Lang }
   | { kind: 'post'; lang: Lang; slug: string }
   | { kind: 'notFound'; lang: Lang }
@@ -37,6 +38,9 @@ export function libraryPath(lang: Lang, slug: string): string {
 }
 export function verificahubPath(lang: Lang): string {
   return `${prefix(lang)}/verificahub`
+}
+export function pir2pirPath(lang: Lang): string {
+  return `${prefix(lang)}/pir2pir`
 }
 export function blogPath(lang: Lang): string {
   return `${prefix(lang)}/blog`
@@ -60,6 +64,8 @@ export function pathForRoute(route: RouteMatch): string {
       return libraryPath(route.lang, route.slug)
     case 'verificahub':
       return verificahubPath(route.lang)
+    case 'pir2pir':
+      return pir2pirPath(route.lang)
     case 'blog':
       return blogPath(route.lang)
     case 'post':
@@ -84,6 +90,8 @@ export function ogImagePath(route: RouteMatch): string {
       return `${dir}/open-source-${route.slug}.png`
     case 'verificahub':
       return `${dir}/verificahub.png`
+    case 'pir2pir':
+      return `${dir}/pir2pir.png`
     case 'blog':
       return `${dir}/blog.png`
     case 'post':
@@ -120,6 +128,7 @@ export function matchRoute(pathname: string): RouteMatch {
     return { kind: 'notFound', lang }
   }
   if (rest === '/verificahub') return { kind: 'verificahub', lang }
+  if (rest === '/pir2pir') return { kind: 'pir2pir', lang }
   if (rest === '/blog') return { kind: 'blog', lang }
   if (rest.startsWith('/blog/')) {
     const slug = rest.slice('/blog/'.length)
@@ -137,6 +146,7 @@ export function allRoutes(): RouteMatch[] {
     routes.push({ kind: 'libraries', lang })
     for (const library of libraries) routes.push({ kind: 'library', lang, slug: library.slug })
     routes.push({ kind: 'verificahub', lang })
+    routes.push({ kind: 'pir2pir', lang })
     routes.push({ kind: 'blog', lang })
     for (const post of posts) routes.push({ kind: 'post', lang, slug: post.slug })
   }

@@ -1,4 +1,5 @@
-import type { L } from './types'
+import type { L, Lang } from './types'
+import { verificahubPath, pir2pirPath } from '../routes'
 
 export const profile = {
   name: { ru: 'Айгиз Искужин', en: 'Aigiz Iskuzhin' } as L,
@@ -162,15 +163,15 @@ export type Project = {
   links: { label: string; href: string }[]
   /** A flagship product — featured in its own section and skipped by the ticker loop. */
   flagship?: boolean
-  /** Has an internal detail page (/verificahub); drives the "Learn more" link. */
-  hasDetailPage?: boolean
+  /** Builds the internal detail-page path, for products that have one. Drives "Learn more". */
+  detailPath?: (lang: Lang) => string
 }
 
 export const projects: Project[] = [
   {
     title: { ru: 'VerificaHub', en: 'VerificaHub' },
     flagship: true,
-    hasDetailPage: true,
+    detailPath: verificahubPath,
     description: {
       ru: 'Платформа верификации пользователей: звонки, SMS, голос, мессенджеры и многое другое — в одном API.',
       en: 'A user-verification platform: calls, SMS, voice, social apps and more — in one API.',
@@ -198,6 +199,7 @@ export const projects: Project[] = [
   {
     title: { ru: 'Пир2Пир', en: 'Pir2Pir' },
     flagship: true,
+    detailPath: pir2pirPath,
     description: {
       ru: 'Сервис для студентов Школы 21: находит участника, который проверит ваш проект, и даёт место, где об этом договориться.',
       en: 'A service for School 21 students: it finds a peer to review your project and gives you a place to arrange it.',

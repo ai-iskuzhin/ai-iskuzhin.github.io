@@ -34,6 +34,13 @@ const COPY = {
       en: 'User verification: calls, SMS, voice and social apps — in one API.',
     },
   },
+  pir2pir: {
+    eyebrow: { ru: 'Продукт', en: 'Product' },
+    subtitle: {
+      ru: 'Платформа взаимных проверок для Школы 21: платформа сама спросит пиров и откроет чат.',
+      en: 'A peer-review platform for School 21: it asks peers for you and opens the chat.',
+    },
+  },
   blog: {
     eyebrow: { ru: 'Блог', en: 'Blog' },
     title: { ru: 'Заметки о .NET и финтехе', en: 'Notes on .NET and fintech' },
@@ -86,6 +93,16 @@ function cardFor(route) {
         subtitle: pick(COPY.verificahub.subtitle, lang),
         chips: ['API', 'SMS', lang === 'ru' ? 'Звонки' : 'Calls', lang === 'ru' ? 'Голос' : 'Voice'],
         accent: BRAND,
+      }
+
+    case 'pir2pir':
+      return {
+        eyebrow: pick(COPY.pir2pir.eyebrow, lang),
+        title: lang === 'ru' ? 'Пир2Пир' : 'Pir2Pir',
+        subtitle: pick(COPY.pir2pir.subtitle, lang),
+        chips: [lang === 'ru' ? 'Школа 21' : 'School 21', 'Web', 'Telegram', 'MAX'],
+        // The product's own red-orange, so the card matches the logo.
+        accent: ['#E11D48', '#EA580C'],
       }
 
     case 'blog':

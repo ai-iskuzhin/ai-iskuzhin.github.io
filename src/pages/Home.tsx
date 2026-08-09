@@ -12,13 +12,14 @@ import {
   prettyHref,
 } from '../content/profile'
 import { libraries } from '../content/libraries'
-import { librariesPath, verificahubPath } from '../routes'
+import { librariesPath, verificahubPath, pir2pirPath } from '../routes'
 import { Link } from '../router'
 import { LibraryCard } from '../components/LibraryCard'
 import { SocialIcon } from '../components/SocialIcon'
 import { Ticker } from '../components/Ticker'
 import { Typewriter } from '../components/Typewriter'
 import { VerificaHubLogo, VerificaHubWordmark } from '../components/VerificaHubLogo'
+import { Pir2pirLogo } from '../components/Pir2pirLogo'
 import { ArrowIcon, ExternalIcon, MailIcon, PhoneIcon, TelegramIcon, VkIcon } from '../components/Icons'
 
 const packageCount = libraries.reduce((total, lib) => total + 1 + (lib.nugetFamily?.length ?? 0), 0)
@@ -188,8 +189,8 @@ export function Home({ lang }: { lang: Lang }) {
             </span>
           </Link>
 
-          <a href="https://pir2pir.ru" target="_blank" rel="noreferrer" className="flagship-card">
-            <span className="flagship-card__mono" aria-hidden="true">П2П</span>
+          <Link to={pir2pirPath(lang)} className="flagship-card">
+            <Pir2pirLogo size={68} />
             <div className="flagship-card__body">
               <h3>{t({ ru: 'Пир2Пир', en: 'Pir2Pir' }, lang)}</h3>
               <p>
@@ -208,10 +209,10 @@ export function Home({ lang }: { lang: Lang }) {
               </div>
             </div>
             <span className="flagship-card__more">
-              pir2pir.ru
-              <ExternalIcon />
+              {t({ ru: 'Подробнее', en: 'Learn more' }, lang)}
+              <ArrowIcon />
             </span>
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -289,8 +290,8 @@ export function Home({ lang }: { lang: Lang }) {
                 ))}
               </ul>
               <div className="project-card__links">
-                {project.hasDetailPage ? (
-                  <Link to={verificahubPath(lang)}>
+                {project.detailPath ? (
+                  <Link to={project.detailPath(lang)}>
                     {t({ ru: 'Подробнее', en: 'Learn more' }, lang)}
                     <ArrowIcon />
                   </Link>
