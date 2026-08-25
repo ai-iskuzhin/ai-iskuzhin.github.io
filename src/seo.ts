@@ -47,7 +47,23 @@ export function absolute(path: string): string {
   return `${SITE.baseUrl}${path}${suffix}`
 }
 
-export type Meta = { title: string; description: string; type: 'website' | 'article' | 'profile' }
+export type Meta = {
+  title: string
+  description: string
+  type: 'website' | 'article' | 'profile'
+  /**
+   * Where this content actually lives, when that is not here.
+   *
+   * The Пир2Пир page presents the product the way the product's own site presents it — same
+   * pitch, same three sections — and this domain is eleven years older, so it was outranking
+   * pir2pir.ru for the product's own name. A cross-domain canonical says which of the two is the
+   * original and hands the signals there instead of splitting them between the pair.
+   *
+   * The page stays. It is a portfolio entry and people browsing a portfolio should find it; it
+   * simply stops competing in search with the thing it is about.
+   */
+  canonicalUrl?: string
+}
 
 export function metaFor(route: RouteMatch): Meta {
   const lang = route.lang
@@ -94,6 +110,7 @@ export function metaFor(route: RouteMatch): Meta {
       }
     case 'pir2pir':
       return {
+        canonicalUrl: 'https://pir2pir.ru/',
         title: lang === 'ru' ? `Пир2Пир — найти пира для проверки проекта Школы 21` : `Pir2Pir — find a peer to review your School 21 project`,
         description: clamp(
           lang === 'ru'
@@ -323,7 +340,7 @@ function jsonLdFor(route: RouteMatch): object[] {
 export function buildHead(route: RouteMatch): HeadData {
   const lang = route.lang
   const meta = metaFor(route)
-  const canonical = absolute(pathForRoute(route))
+  const canonical = meta.canonicalUrl ?? absolute(pathForRoute(route))
   const title = esc(meta.title)
   const description = esc(meta.description)
   const ogImage = absolute(ogImagePath(route))
@@ -351,12 +368,19 @@ export function buildHead(route: RouteMatch): HeadData {
     lines.push(
       `<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />`,
     )
-    // hreflang alternates
-    for (const altLang of LANGS) {
-      const alt = absolute(pathForRoute(alternateRoute(route, altLang)))
-      lines.push(`<link rel="alternate" hreflang="${altLang}" href="${alt}" />`)
+    // hreflang alternates.
+    //
+    // Skipped entirely when the canonical points off this domain: hreflang describes a set of
+    // pages that are translations of one another and each claim to be canonical, so annotating a
+    // page that has just handed that claim elsewhere is two instructions that contradict, and a
+    // crawler resolves the contradiction by ignoring both.
+    if (!meta.canonicalUrl) {
+      for (const altLang of LANGS) {
+        const alt = absolute(pathForRoute(alternateRoute(route, altLang)))
+        lines.push(`<link rel="alternate" hreflang="${altLang}" href="${alt}" />`)
+      }
+      lines.push(`<link rel="alternate" hreflang="x-default" href="${absolute(pathForRoute(alternateRoute(route, 'ru')))}" />`)
     }
-    lines.push(`<link rel="alternate" hreflang="x-default" href="${absolute(pathForRoute(alternateRoute(route, 'ru')))}" />`)
   }
 
   // The blog and its posts advertise the feed; Googlebot has crawled feeds for

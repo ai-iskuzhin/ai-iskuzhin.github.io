@@ -28,7 +28,8 @@ function setLink(rel: string, href: string) {
 export function applyHead(route: RouteMatch) {
   if (typeof document === 'undefined') return
   const meta = metaFor(route)
-  const canonical = absolute(pathForRoute(route))
+  // Same rule as the prerendered head: a page whose content lives elsewhere says so.
+  const canonical = meta.canonicalUrl ?? absolute(pathForRoute(route))
 
   document.title = meta.title
   document.documentElement.lang = HTML_LANG[route.lang]

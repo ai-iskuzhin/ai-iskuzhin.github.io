@@ -10,7 +10,7 @@ import { RouterProvider } from './router'
 import { pathForRoute, type RouteMatch } from './routes'
 
 export { allRoutes, pathForRoute, ogImagePath, feedPath, SITE } from './routes'
-export { buildHead } from './seo'
+export { buildHead, metaFor } from './seo'
 // Consumed by scripts/og.mjs so the cards read from the app's own content.
 export { libraries } from './content/libraries'
 export { posts } from './content/posts'

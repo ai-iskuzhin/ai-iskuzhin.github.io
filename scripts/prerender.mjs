@@ -13,7 +13,7 @@ const root = dirname(dirname(fileURLToPath(import.meta.url)))
 const distDir = join(root, 'dist')
 const ssrEntry = pathToFileURL(join(root, '.prerender/entry-prerender.js')).href
 
-const { allRoutes, pathForRoute, feedPath, buildHead, SITE, renderPage, posts, profile } =
+const { allRoutes, pathForRoute, feedPath, buildHead, metaFor, SITE, renderPage, posts, profile } =
   await import(ssrEntry)
 
 /**
@@ -102,7 +102,13 @@ function xml(value) {
 // enough, and Yandex no longer reads language alternates from the sitemap.
 const PRIORITY = { home: '1.0', libraries: '0.8', verificahub: '0.8', pir2pir: '0.8', library: '0.7', blog: '0.6', post: '0.6' }
 
-const indexable = routes.filter((route) => route.kind !== 'notFound')
+// A sitemap is an invitation to index, so a page that has handed its canonical to another site
+// does not belong in one: listing it asks a crawler to index a URL the same page tells it is not
+// the original. Derived from the head rather than from a list of slugs repeated here — the day a
+// second page points its canonical elsewhere, this follows without being told.
+const indexable = routes.filter(
+  (route) => route.kind !== 'notFound' && !metaFor(route).canonicalUrl,
+)
 const urlEntries = indexable.map((route) => {
   const lastmod = route.kind === 'post' ? postBySlug.get(route.slug).date : buildDate
   return [
