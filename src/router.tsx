@@ -1,27 +1,5 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-  type AnchorHTMLAttributes,
-  type ReactNode,
-} from 'react'
-
-type RouterValue = {
-  path: string
-  navigate: (to: string) => void
-}
-
-const RouterContext = createContext<RouterValue>({
-  path: '/',
-  navigate: () => {},
-})
-
-function currentPath(): string {
-  if (typeof window === 'undefined') return '/'
-  return window.location.pathname + window.location.hash
-}
+import { useCallback, useEffect, useState, type AnchorHTMLAttributes, type ReactNode } from 'react'
+import { RouterContext, useRouter } from './routerContext'
 
 export function RouterProvider({
   children,
@@ -61,10 +39,6 @@ export function RouterProvider({
   return <RouterContext.Provider value={{ path, navigate }}>{children}</RouterContext.Provider>
 }
 
-export function useRouter(): RouterValue {
-  return useContext(RouterContext)
-}
-
 type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   to: string
 }
@@ -89,5 +63,3 @@ export function Link({ to, onClick, ...rest }: LinkProps) {
     />
   )
 }
-
-export { currentPath }

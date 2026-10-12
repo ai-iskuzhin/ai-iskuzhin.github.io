@@ -8,6 +8,9 @@ type State =
   | { status: 'ready'; html: string }
   | { status: 'error' }
 
+/** A finished load, tagged with the repo it was for: anything else still counts as loading. */
+type Loaded = { repo: string; state: State }
+
 const rawUrl = (repo: string, branch: string) =>
   `https://raw.githubusercontent.com/ai-iskuzhin/${repo}/${branch}/README.md`
 
@@ -30,11 +33,12 @@ function sanitize(html: string): string {
 }
 
 export function ReadmeViewer({ repo, lang }: { repo: string; lang: Lang }) {
-  const [state, setState] = useState<State>({ status: 'loading' })
+  const [loaded, setLoaded] = useState<Loaded | null>(null)
+  // Derived rather than reset in the effect: a repo change shows the spinner on the same render.
+  const state: State = loaded?.repo === repo ? loaded.state : { status: 'loading' }
 
   useEffect(() => {
     let cancelled = false
-    setState({ status: 'loading' })
 
     async function load() {
       try {
@@ -50,9 +54,9 @@ export function ReadmeViewer({ repo, lang }: { repo: string; lang: Lang }) {
         const markdown = await response.text()
         const parsed = marked.parse(markdown, { async: false, gfm: true, breaks: false })
         const html = typeof parsed === 'string' ? parsed : await parsed
-        if (!cancelled) setState({ status: 'ready', html: sanitize(rewriteUrls(html, repo, branch)) })
+        if (!cancelled) setLoaded({ repo, state: { status: 'ready', html: sanitize(rewriteUrls(html, repo, branch)) } })
       } catch {
-        if (!cancelled) setState({ status: 'error' })
+        if (!cancelled) setLoaded({ repo, state: { status: 'error' } })
       }
     }
 

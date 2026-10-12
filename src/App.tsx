@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { matchRoute } from './routes'
-import { useRouter } from './router'
+import { useRouter } from './routerContext'
 import { applyHead } from './head'
 import { trackPageview } from './analytics'
 import { Header } from './components/Header'

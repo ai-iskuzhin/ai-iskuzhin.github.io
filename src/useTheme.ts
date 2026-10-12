@@ -1,22 +1,32 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useSyncExternalStore } from 'react'
 
 export type ThemeMode = 'light' | 'dark' | 'system'
 
 const STORAGE_KEY = 'theme-mode'
 
+const listeners = new Set<() => void>()
+
+function subscribe(listener: () => void) {
+  listeners.add(listener)
+  return () => listeners.delete(listener)
+}
+
 function readStored(): ThemeMode {
-  if (typeof window === 'undefined') return 'system'
   const stored = window.localStorage.getItem(STORAGE_KEY)
   if (stored === 'light' || stored === 'dark' || stored === 'system') return stored
   return 'system'
 }
 
-export function useTheme() {
-  const [mode, setMode] = useState<ThemeMode>('system')
+// The server (and hydration) always sees 'system', so the markup matches; React then
+// re-renders with the stored mode on the client.
+const serverMode = (): ThemeMode => 'system'
 
-  // Hydrate from storage after mount to avoid SSR/markup mismatch.
-  useEffect(() => {
-    setMode(readStored())
+export function useTheme() {
+  const mode = useSyncExternalStore(subscribe, readStored, serverMode)
+
+  const setMode = useCallback((next: ThemeMode) => {
+    window.localStorage.setItem(STORAGE_KEY, next)
+    listeners.forEach((listener) => listener())
   }, [])
 
   useEffect(() => {
@@ -26,7 +36,6 @@ export function useTheme() {
     } else {
       root.dataset.theme = mode
     }
-    window.localStorage.setItem(STORAGE_KEY, mode)
   }, [mode])
 
   return { mode, setMode }

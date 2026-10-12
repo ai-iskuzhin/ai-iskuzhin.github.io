@@ -10,7 +10,8 @@ import {
   librariesPath,
   blogPath,
 } from '../routes'
-import { Link, useRouter } from '../router'
+import { Link } from '../router'
+import { useRouter } from '../routerContext'
 import { useTheme, type ThemeMode } from '../useTheme'
 import { SunIcon, MoonIcon, SparkIcon } from './Icons'
 
