@@ -3,7 +3,6 @@ import { t } from '../i18n'
 import { ExternalIcon, GitHubIcon, CheckIcon } from '../components/Icons'
 import { VerificaHubLogo, VerificaHubWordmark } from '../components/VerificaHubLogo'
 
-const stack = ['ASP.NET Core', 'FastEndpoints', 'EF Core 10', 'PostgreSQL (Npgsql)', 'Redis', 'Docker', 'React', 'TypeScript']
 
 const channels: Record<Lang, string[]> = {
   ru: ['Звонки (flash-call)', 'SMS', 'Голосовые сообщения', 'Мессенджеры', 'Социальные приложения'],
@@ -63,14 +62,6 @@ export function Verificahub({ lang }: { lang: Lang }) {
         </ul>
       </section>
 
-      <section className="library-section">
-        <h2>{t({ ru: 'Технологии', en: 'Tech stack' }, lang)}</h2>
-        <ul className="tag-list tag-list--lg">
-          {stack.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </section>
     </article>
   )
 }

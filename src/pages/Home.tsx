@@ -12,7 +12,7 @@ import {
   prettyHref,
 } from '../content/profile'
 import { libraries } from '../content/libraries'
-import { librariesPath, verificahubPath, pir2pirPath } from '../routes'
+import { librariesPath, verificahubPath, pir2pirPath, talkyhubPath, sportgearhubPath } from '../routes'
 import { Link } from '../router'
 import { LibraryCard } from '../components/LibraryCard'
 import { SocialIcon } from '../components/SocialIcon'
@@ -20,6 +20,7 @@ import { Ticker } from '../components/Ticker'
 import { Typewriter } from '../components/Typewriter'
 import { VerificaHubLogo, VerificaHubWordmark } from '../components/VerificaHubLogo'
 import { Pir2pirLogo } from '../components/Pir2pirLogo'
+import { ProductLogo } from '../components/ProductLogo'
 import { ArrowIcon, ExternalIcon, MailIcon, PhoneIcon, TelegramIcon, VkIcon } from '../components/Icons'
 
 const packageCount = libraries.reduce((total, lib) => total + 1 + (lib.nugetFamily?.length ?? 0), 0)
@@ -143,22 +144,6 @@ export function Home({ lang }: { lang: Lang }) {
         </div>
       </section>
 
-      <section className="section" id="open-source">
-        <div className="section__head">
-          <p className="section__kicker">{t(ui.sections.openSource, lang)}</p>
-          <p className="section__lead">{t(ui.sections.openSourceLead, lang)}</p>
-        </div>
-        <div className="library-grid">
-          {libraries.map((library) => (
-            <LibraryCard key={library.slug} library={library} lang={lang} />
-          ))}
-        </div>
-        <Link to={librariesPath(lang)} className="section__cta">
-          {t({ ru: 'Все библиотеки и документация', en: 'All libraries and docs' }, lang)}
-          <ArrowIcon />
-        </Link>
-      </section>
-
       <section className="section" id="flagship">
         <div className="section__head">
           <p className="section__kicker">{t(ui.sections.flagships, lang)}</p>
@@ -177,11 +162,6 @@ export function Home({ lang }: { lang: Lang }) {
                   lang,
                 )}
               </p>
-              <div className="flagship-card__stack">
-                {['ASP.NET Core', 'FastEndpoints', 'EF Core 10', 'PostgreSQL', 'Redis'].map((item) => (
-                  <span key={item}>{item}</span>
-                ))}
-              </div>
             </div>
             <span className="flagship-card__more">
               {t({ ru: 'Подробнее', en: 'Learn more' }, lang)}
@@ -196,17 +176,52 @@ export function Home({ lang }: { lang: Lang }) {
               <p>
                 {t(
                   {
-                    ru: 'Сервис для студентов Школы 21: находит участника, который проверит ваш проект, и даёт место, где об этом договориться. Построен на моём SDK School21Net.',
-                    en: 'A service for School 21 students: it finds a peer to review your project and a place to arrange it. Built on my School21Net SDK.',
+                    ru: 'Сервис для студентов Школы 21: находит участника, который проверит ваш проект, и даёт место, где об этом договориться.',
+                    en: 'A service for School 21 students: it finds a peer to review your project and a place to arrange it.',
                   },
                   lang,
                 )}
               </p>
-              <div className="flagship-card__stack">
-                {['ASP.NET Core', 'PostgreSQL', 'School21Net', 'Telegram', 'MAX'].map((item) => (
-                  <span key={item}>{item}</span>
-                ))}
-              </div>
+            </div>
+            <span className="flagship-card__more">
+              {t({ ru: 'Подробнее', en: 'Learn more' }, lang)}
+              <ArrowIcon />
+            </span>
+          </Link>
+
+          <Link to={talkyhubPath(lang)} className="flagship-card">
+            <ProductLogo src="/logos/talkyhub.svg" alt="TalkyHub" size={68} />
+            <div className="flagship-card__body">
+              <h3>TalkyHub</h3>
+              <p>
+                {t(
+                  {
+                    ru: 'Омниканальная платформа поддержки: Telegram, VK, MAX и почта, вся команда и вся история переписки — в одном окне, по одной понятной цене.',
+                    en: 'An omnichannel support platform: Telegram, VK, MAX and email, your whole team and full history — in one place, for one clear price.',
+                  },
+                  lang,
+                )}
+              </p>
+            </div>
+            <span className="flagship-card__more">
+              {t({ ru: 'Подробнее', en: 'Learn more' }, lang)}
+              <ArrowIcon />
+            </span>
+          </Link>
+
+          <Link to={sportgearhubPath(lang)} className="flagship-card">
+            <ProductLogo src="/logos/sportgearhub.svg" alt="Sportgearhub" size={68} />
+            <div className="flagship-card__body">
+              <h3>Sportgearhub</h3>
+              <p>
+                {t(
+                  {
+                    ru: 'Маркетплейс проката спортивного снаряжения: бронь и оплата онлайн у проверенных прокатов, а прокатам — автоматические чеки и выплаты.',
+                    en: 'A sports gear rental marketplace: book and pay online from verified rentals, with automatic receipts and payouts for the rentals.',
+                  },
+                  lang,
+                )}
+              </p>
             </div>
             <span className="flagship-card__more">
               {t({ ru: 'Подробнее', en: 'Learn more' }, lang)}
@@ -214,6 +229,22 @@ export function Home({ lang }: { lang: Lang }) {
             </span>
           </Link>
         </div>
+      </section>
+
+      <section className="section" id="open-source">
+        <div className="section__head">
+          <p className="section__kicker">{t(ui.sections.openSource, lang)}</p>
+          <p className="section__lead">{t(ui.sections.openSourceLead, lang)}</p>
+        </div>
+        <div className="library-grid">
+          {libraries.map((library) => (
+            <LibraryCard key={library.slug} library={library} lang={lang} />
+          ))}
+        </div>
+        <Link to={librariesPath(lang)} className="section__cta">
+          {t({ ru: 'Все библиотеки и документация', en: 'All libraries and docs' }, lang)}
+          <ArrowIcon />
+        </Link>
       </section>
 
       <section className="section" id="experience">
@@ -284,11 +315,13 @@ export function Home({ lang }: { lang: Lang }) {
                   ))}
                 </ul>
               ) : null}
-              <ul className="tag-list">
-                {project.stack.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
+              {project.stack ? (
+                <ul className="tag-list">
+                  {project.stack.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              ) : null}
               <div className="project-card__links">
                 {project.detailPath ? (
                   <Link to={project.detailPath(lang)}>

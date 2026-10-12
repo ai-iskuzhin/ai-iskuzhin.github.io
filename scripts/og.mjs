@@ -5,7 +5,7 @@
 import { mkdir, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
-import { OG_MAX_BYTES, renderCard } from './og-card.mjs'
+import { OG_MAX_BYTES, publicImage, renderCard } from './og-card.mjs'
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)))
 const distDir = join(root, 'dist')
@@ -39,6 +39,20 @@ const COPY = {
     subtitle: {
       ru: 'Платформа взаимных проверок для Школы 21: платформа сама спросит пиров и откроет чат.',
       en: 'A peer-review platform for School 21: it asks peers for you and opens the chat.',
+    },
+  },
+  talkyhub: {
+    eyebrow: { ru: 'Продукт', en: 'Product' },
+    subtitle: {
+      ru: 'Омниканальная поддержка: Telegram, VK, MAX и почта — в одном окне команды.',
+      en: 'Omnichannel support: Telegram, VK, MAX and email — in one team workspace.',
+    },
+  },
+  sportgearhub: {
+    eyebrow: { ru: 'Продукт', en: 'Product' },
+    subtitle: {
+      ru: 'Маркетплейс проката спортивного снаряжения: бронь онлайн у проверенных прокатов.',
+      en: 'A sports gear rental marketplace: book online from verified rentals.',
     },
   },
   blog: {
@@ -93,6 +107,7 @@ function cardFor(route) {
         subtitle: pick(COPY.verificahub.subtitle, lang),
         chips: ['API', 'SMS', lang === 'ru' ? 'Звонки' : 'Calls', lang === 'ru' ? 'Голос' : 'Voice'],
         accent: BRAND,
+        logo: '/logos/verificahub.svg',
       }
 
     case 'pir2pir':
@@ -103,6 +118,29 @@ function cardFor(route) {
         chips: [lang === 'ru' ? 'Школа 21' : 'School 21', 'Web', 'Telegram', 'MAX'],
         // The product's own red-orange, so the card matches the logo.
         accent: ['#E11D48', '#EA580C'],
+        logo: '/logos/pir2pir.svg',
+      }
+
+    case 'talkyhub':
+      return {
+        eyebrow: pick(COPY.talkyhub.eyebrow, lang),
+        title: 'TalkyHub',
+        subtitle: pick(COPY.talkyhub.subtitle, lang),
+        chips: ['Telegram', 'VK', 'MAX', 'Email'],
+        // The mascot's violet.
+        accent: ['#7E14FF', '#4A2FC4'],
+        logo: '/logos/talkyhub.svg',
+      }
+
+    case 'sportgearhub':
+      return {
+        eyebrow: pick(COPY.sportgearhub.eyebrow, lang),
+        title: 'Sportgearhub',
+        subtitle: pick(COPY.sportgearhub.subtitle, lang),
+        chips: [lang === 'ru' ? 'Прокат' : 'Rental', lang === 'ru' ? 'Маркетплейс' : 'Marketplace', lang === 'ru' ? 'СБП' : 'SBP'],
+        // The logo's blue.
+        accent: ['#5B7CFF', '#0114FC'],
+        logo: '/logos/sportgearhub.svg',
       }
 
     case 'blog':
@@ -144,7 +182,9 @@ for (const route of allRoutes()) {
   const card = cardFor(route)
   if (!card) continue
 
-  const { data, colors } = await renderCard({ ...card, site })
+  // Flagship products show their own logo where other cards show the portrait.
+  const logo = card.logo ? await publicImage(card.logo) : undefined
+  const { data, colors } = await renderCard({ ...card, logo, site })
   if (data.length > OG_MAX_BYTES) oversized.push([path, data.length, colors])
 
   const file = join(distDir, path.replace(/^\//, ''))

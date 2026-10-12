@@ -119,6 +119,30 @@ export function metaFor(route: RouteMatch): Meta {
         ),
         type: 'website',
       }
+    // Same reasoning as Пир2Пир above: these pages carry the products' own pitch, so the canonical
+    // goes to the product's site and the portfolio entry stays out of its way in search.
+    case 'talkyhub':
+      return {
+        canonicalUrl: 'https://talkyhub.ru/',
+        title: lang === 'ru' ? `TalkyHub — омниканальная платформа поддержки` : `TalkyHub — an omnichannel support platform`,
+        description: clamp(
+          lang === 'ru'
+            ? 'TalkyHub собирает обращения из Telegram, VK, MAX и почты в единое рабочее место команды поддержки. Все каналы включены, сообщения без лимита — одна понятная цена. Продукт Айгиза Искужина.'
+            : 'TalkyHub brings messages from Telegram, VK, MAX and email into one workspace for the support team. All channels included, unlimited messages — one clear price. A product by Aigiz Iskuzhin.',
+        ),
+        type: 'website',
+      }
+    case 'sportgearhub':
+      return {
+        canonicalUrl: 'https://sportgearhub.ru/',
+        title: lang === 'ru' ? `Sportgearhub — маркетплейс проката спортивного снаряжения` : `Sportgearhub — a sports gear rental marketplace`,
+        description: clamp(
+          lang === 'ru'
+            ? 'Велосипеды, SUP-доски, лыжи и походное снаряжение от проверенных прокатов: бронь за пару минут, оплата онлайн, автоматические чеки и выплаты прокатам. Продукт Айгиза Искужина.'
+            : 'Bikes, SUP boards, skis and hiking gear from verified rentals: book in a couple of minutes, pay online, with automatic receipts and payouts to the rentals. A product by Aigiz Iskuzhin.',
+        ),
+        type: 'website',
+      }
     case 'blog':
       return {
         title: lang === 'ru' ? `Блог — ${name}` : `Blog — ${name}`,
@@ -282,6 +306,34 @@ function jsonLdFor(route: RouteMatch): object[] {
         inLanguage: ['ru', 'en', 'uz'],
         description: meta.description,
         offers: { '@type': 'Offer', price: 0, priceCurrency: 'RUB' },
+        author: { '@id': PERSON_ID },
+      })
+      break
+
+    case 'talkyhub':
+      graph.push(page('WebPage'), crumbs([home, { name: 'TalkyHub' }]), {
+        '@type': 'WebApplication',
+        '@id': 'https://talkyhub.ru/#app',
+        name: 'TalkyHub',
+        url: 'https://talkyhub.ru',
+        applicationCategory: 'BusinessApplication',
+        operatingSystem: 'Web',
+        inLanguage: ['ru', 'en'],
+        description: meta.description,
+        author: { '@id': PERSON_ID },
+      })
+      break
+
+    case 'sportgearhub':
+      graph.push(page('WebPage'), crumbs([home, { name: 'Sportgearhub' }]), {
+        '@type': 'WebApplication',
+        '@id': 'https://sportgearhub.ru/#app',
+        name: 'Sportgearhub',
+        url: 'https://sportgearhub.ru',
+        applicationCategory: 'ShoppingApplication',
+        operatingSystem: 'Web',
+        inLanguage: 'ru',
+        description: meta.description,
         author: { '@id': PERSON_ID },
       })
       break

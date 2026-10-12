@@ -300,6 +300,57 @@ Console.WriteLine(result.PdfUrl);   // PDF link (valid 10 days)`,
     ],
   },
   {
+    slug: 'tbanknet-multisplit',
+    name: 'TBankNet.Multisplit',
+    repo: 'TBankNet.Multisplit',
+    nuget: 'TBankNet.Multisplit',
+    docsUrl: 'https://www.tbank.ru/kassa/develop/api/multisplit/',
+    docsLabel: { ru: 'Документация Мультисплита', en: 'Multisplit API docs' },
+    category: { ru: 'Эквайринг / сплит', en: 'Acquiring / split' },
+    icon: '/logos/tbanknet-multisplit.png',
+    accent: ['#FFDD2D', '#0EA5E9'],
+    logo: 'nuget',
+    tagline: {
+      ru: 'Неофициальный .NET SDK для T-Bank Мультисплит',
+      en: 'Unofficial .NET SDK for T-Bank Multisplit',
+    },
+    summary: {
+      ru: 'Регистрация и обновление точек (магазинов) в схеме T-Bank Мультисплит. Токеном владеете вы: только GetAccessTokenAsync ходит в /oauth/token, остальные методы принимают переданный токен. Среда Test / Prod задаётся явно — без молчаливого продакшена по умолчанию. Без сторонних зависимостей.',
+      en: 'Register and update shops (points of sale) in the T-Bank Multisplit scheme. You own the token: only GetAccessTokenAsync calls /oauth/token, every other method takes the token you pass in. The Test / Prod environment is explicit — it never assumes production. No third-party dependencies.',
+    },
+    targets: ['net10.0'],
+    license: 'MIT',
+    language: 'C#',
+    install: 'dotnet add package TBankNet.Multisplit --prerelease',
+    quickstart: {
+      language: 'csharp',
+      code: `using TBankNet.Multisplit;
+
+var client = new TBankMultisplitClient(httpClient, new TBankMultisplitClientOptions
+{
+    Username = "login-from-bank",
+    Password = "...",
+    Environment = TBankMultisplitEnvironment.Test
+});
+
+var token = (await client.GetAccessTokenAsync()).ToAccessToken();
+var shop = await client.GetShopAsync("111111111", token);`,
+    },
+    features: [
+      { ru: 'Регистрация, получение и обновление точек', en: 'Register, read and update shops' },
+      { ru: 'Кэш и обновление токена — на стороне интеграции', en: 'Token caching and refresh stay with the integrator' },
+      { ru: 'Явная среда Test / Prod без значения по умолчанию', en: 'Explicit Test / Prod environment, no implicit default' },
+      { ru: 'Готовность к Russian Trusted CA и mTLS', en: 'Ready for the Russian Trusted CA and mTLS' },
+      { ru: 'Локальная валидация и типизированные исключения', en: 'Local validation and typed exceptions' },
+    ],
+    methods: [
+      { name: 'GetAccessTokenAsync', desc: { ru: 'Получение OAuth-токена', en: 'Obtain an OAuth token' } },
+      { name: 'RegisterShopAsync', desc: { ru: 'Регистрация точки', en: 'Register a shop' } },
+      { name: 'GetShopAsync', desc: { ru: 'Данные точки по shopCode', en: 'Read a shop by shopCode' } },
+      { name: 'UpdateShopAsync', desc: { ru: 'Обновление реквизитов точки', en: 'Update a shop’s details' } },
+    ],
+  },
+  {
     slug: 'atolonlinenet',
     name: 'AtolOnlineNet',
     repo: 'AtolOnlineNet',
@@ -711,6 +762,155 @@ var awaiting  = await client.Projects.GetParticipantsAsync(73465, ParticipantPro
       { name: 'Participants.GetAsync', desc: { ru: 'Профиль участника', en: 'A participant’s profile' } },
       { name: 'Participants.GetProjectsAsync', desc: { ru: 'Проекты участника', en: 'A participant’s projects' } },
       { name: 'AuthenticateAsync', desc: { ru: 'Получение токена (ROPC)', en: 'Obtain a token (ROPC)' } },
+    ],
+  },
+  {
+    slug: 'exolvenet',
+    name: 'ExolveNet',
+    repo: 'ExolveNet',
+    nuget: 'ExolveNet',
+    docsUrl: 'https://github.com/ai-iskuzhin/ExolveNet#readme',
+    docsLabel: { ru: 'README на GitHub', en: 'README on GitHub' },
+    category: { ru: 'Телефония / HLR', en: 'Telephony / HLR' },
+    icon: '/logos/exolvenet.png',
+    accent: ['#FF0032', '#7C3AED'],
+    logo: 'nuget',
+    tagline: {
+      ru: 'Неофициальный .NET SDK для МТС Exolve Number Lookup (HLR)',
+      en: 'Unofficial .NET SDK for MTS Exolve Number Lookup (HLR)',
+    },
+    summary: {
+      ru: 'Скоринг активности номера, статус SIM, оператор и регион с учётом MNP, лучшее время для звонка и SMS, пакетные отчёты до 50 000 номеров. Номер в любом формате нормализуется и проверяется локально до отправки — Exolve тарифицирует даже отклонённые запросы. Номера маскируются в логах.',
+      en: 'Number activity score, SIM status, MNP-aware operator and region, best time to call or text, and batch reports of up to 50,000 numbers. A number in any format is normalized and validated locally before it is sent — Exolve bills even rejected requests. Numbers are masked in logs.',
+    },
+    targets: ['netstandard2.0', 'net8.0', 'net10.0'],
+    license: 'MIT',
+    language: 'C#',
+    install: 'dotnet add package ExolveNet',
+    quickstart: {
+      language: 'csharp',
+      code: `using ExolveNet;
+
+var client = new ExolveHlrClient(
+    httpClient,                                  // e.g. from IHttpClientFactory
+    new ExolveClientOptions { ApiKey = "<app API key>" });
+
+var score = await client.GetActivityScoreAsync("+7 913 999-99-99");
+
+Console.WriteLine(score.Score);     // 0.85 — from 0 (no activity) to 1
+Console.WriteLine(score.OwnerId);   // operator
+Console.WriteLine(score.Number);    // 79139999999`,
+    },
+    features: [
+      { ru: 'Нормализация и проверка номера до платного вызова', en: 'Number normalization and validation before any paid call' },
+      { ru: 'Оператор и регион с учётом переноса номера (MNP)', en: 'MNP-aware operator and region detection' },
+      { ru: 'Пакетные отчёты до 50 000 номеров', en: 'Batch reports of up to 50,000 numbers' },
+      { ru: 'Типизированные исключения с признаками причин', en: 'Typed exceptions with reason flags' },
+      { ru: 'Маскирование персональных данных в логах', en: 'PII-safe logging' },
+    ],
+    methods: [
+      { name: 'GetActivityScoreAsync', desc: { ru: 'Скоринг активности номера (0–1)', en: 'Number activity score (0–1)' } },
+      { name: 'GetBaseNumberInfoAsync', desc: { ru: 'Оператор, регион, перенос номера', en: 'Operator, region, ported flag' } },
+      { name: 'GetSimStatusAsync', desc: { ru: 'Статус SIM-карты', en: 'SIM status' } },
+      { name: 'GetBestCallTimeAsync', desc: { ru: 'Лучшее время для звонка', en: 'Best time to call' } },
+      { name: 'GenerateActivityScoreReportAsync', desc: { ru: 'Пакетный отчёт по номерам', en: 'Start a batch report' } },
+    ],
+  },
+  {
+    slug: 'fnsnet-npdstatus',
+    name: 'FnsNet.NpdStatus',
+    repo: 'FnsNet.NpdStatus',
+    nuget: 'FnsNet.NpdStatus',
+    docsUrl: 'https://npd.nalog.ru/check-status/',
+    docsLabel: { ru: 'Сервис ФНС', en: 'FNS service' },
+    category: { ru: 'Налоги / самозанятые', en: 'Tax / self-employed' },
+    icon: '/logos/fnsnet-npdstatus.png',
+    accent: ['#1E5AA8', '#7C3AED'],
+    logo: 'nuget',
+    tagline: {
+      ru: '.NET SDK для проверки статуса самозанятого в ФНС',
+      en: '.NET SDK to check self-employed status with the Russian tax service',
+    },
+    summary: {
+      ru: 'По ИНН и дате отвечает, был ли человек плательщиком налога на профессиональный доход (самозанятым) на эту дату. Публичный сервис ФНС — без ключа и договора. Регистрация в DI одной строкой возвращает IHttpClientBuilder, так что ретраи, rate limiting и логирование подключаются штатно; ошибки помечены IsTransient.',
+      en: 'Given an INN and a date, it tells you whether the person was a professional-income (self-employed) taxpayer on that date. A public FNS service — no key, no contract. One-line DI registration returns an IHttpClientBuilder, so retries, rate limiting and logging plug in the standard way; errors carry IsTransient.',
+    },
+    targets: ['net8.0', 'net10.0'],
+    license: 'MIT',
+    language: 'C#',
+    install: 'dotnet add package FnsNet.NpdStatus',
+    quickstart: {
+      language: 'csharp',
+      code: `using FnsNet.NpdStatus;
+using Microsoft.Extensions.DependencyInjection;
+
+services.AddNpdStatusClient();
+
+// Without a DI container
+using var client = NpdStatusClient.Create();
+
+var status = await client.GetStatusAsync("525741209968", new DateOnly(2026, 10, 1));`,
+    },
+    features: [
+      { ru: 'Статус самозанятого по ИНН на дату', en: 'Self-employed status by INN on a date' },
+      { ru: 'Регистрация в DI или фабрика без контейнера', en: 'DI registration or a container-free factory' },
+      { ru: 'Ошибки с кодом сервиса и признаком IsTransient', en: 'Errors with the service code and IsTransient' },
+      { ru: 'Сырое тело ответа: всегда на ошибке, по флагу на успехе', en: 'Raw body: always on error, opt-in on success' },
+      { ru: 'Наблюдаемость через штатный HttpClient', en: 'Observability through the standard HttpClient' },
+    ],
+    methods: [
+      { name: 'GetStatusAsync', desc: { ru: 'Статус налогоплательщика НПД на дату', en: 'Self-employed status on a date' } },
+      { name: 'AddNpdStatusClient', desc: { ru: 'Регистрация в DI', en: 'DI registration' } },
+      { name: 'NpdStatusClient.Create', desc: { ru: 'Клиент без контейнера', en: 'A client without DI' } },
+    ],
+  },
+  {
+    slug: 'beelinenet-leadgenerator',
+    name: 'BeelineNet.LeadGenerator',
+    repo: 'BeelineNet.LeadGenerator',
+    nuget: 'BeelineNet.LeadGenerator',
+    docsUrl: 'https://github.com/ai-iskuzhin/BeelineNet.LeadGenerator#readme',
+    docsLabel: { ru: 'README на GitHub', en: 'README on GitHub' },
+    category: { ru: 'Лидогенерация / B2B', en: 'Lead generation / B2B' },
+    icon: '/logos/beelinenet-leadgenerator.png',
+    accent: ['#FFC800', '#7C3AED'],
+    logo: 'nuget',
+    tagline: {
+      ru: '.NET-клиент партнёрского API билайн B2B Lead Generator',
+      en: '.NET client for the beeline B2B Lead Generator partner API',
+    },
+    summary: {
+      ru: 'Передача лидов в роли рекламного агента билайна, поиск и отслеживание их статуса, каталог продуктов и загрузка шаблонов. Аутентификация — взаимный TLS с клиентским сертификатом (PEM или PFX с полной цепочкой). Неизвестные статусы сохраняются, а не отвергаются. Единственная зависимость — Microsoft.Extensions.Http.',
+      en: 'Submit leads as a beeline advertising agent, search and poll their status, read the product catalogue and upload template files. Authentication is mutual TLS with a client certificate (PEM or a full-chain PFX). Unknown statuses are kept, not rejected. Its only dependency is Microsoft.Extensions.Http.',
+    },
+    targets: ['net8.0'],
+    license: 'MIT',
+    language: 'C#',
+    install: 'dotnet add package BeelineNet.LeadGenerator',
+    quickstart: {
+      language: 'csharp',
+      code: `using BeelineNet.LeadGenerator;
+
+using var client = BeelineLeadGeneratorClient.Create(new BeelineClientOptions
+{
+    ClientCertificate = BeelineCertificate.FromPfx("partner.pfx", "password"),
+    AgreementNumber   = "ПМ999999",
+});
+
+var offers = await client.GetOffersAsync();`,
+    },
+    features: [
+      { ru: 'Передача лидов и отслеживание статуса', en: 'Submit leads and track their status' },
+      { ru: 'mTLS: сертификат из PEM-файлов или PFX', en: 'mTLS: certificate from PEM files or a PFX' },
+      { ru: 'Номер договора по умолчанию для всех вызовов', en: 'A default agreement number for every call' },
+      { ru: 'Нормализация телефона и проверка ИНН', en: 'Phone normalization and INN validation' },
+      { ru: 'DI или автономное использование', en: 'DI or standalone use' },
+    ],
+    methods: [
+      { name: 'CreateLeadAsync', desc: { ru: 'Передать лид', en: 'Submit a lead' } },
+      { name: 'SearchLeadsAsync', desc: { ru: 'Поиск и статус лидов', en: 'Search and poll leads' } },
+      { name: 'GetOffersAsync', desc: { ru: 'Каталог продуктов', en: 'Product catalogue' } },
+      { name: 'UploadOfferAttachmentAsync', desc: { ru: 'Загрузка шаблона продукта', en: 'Upload a product template' } },
     ],
   },
 ]

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="TalkyHub">
+  <title>TalkyHub</title>
+  <rect width="512" height="512" rx="112" fill="#EFE9FF"/>
+  <!-- The TalkyHub mascot (talkyhub-web-landing/public/favicon.svg), centred on the brand's violet tint. -->
+  <g transform="translate(256 256) scale(1.0) translate(-263.42 -212.05)">
+    <defs>
+      <linearGradient id="talkyhub-mascot" x1="113.452" y1="79.399" x2="413.389" y2="344.703" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#6a4ce0"/>
+        <stop offset="1" stop-color="#4a2fc4"/>
+      </linearGradient>
+    </defs>
+    <path d="M 113.452 163.096 C 113.452 123.249 183.929 79.399 261.712 79.399 C 343.929 79.399 413.389 122.79 413.389 163.096 L 413.389 325.071 C 413.389 338.404 405.616 344.703 392.283 344.703 C 392.283 344.703 261.712 344.703 243.904 344.703 C 214.025 344.703 190.265 325.003 183.929 325.071 C 177.332 325.142 167.107 344.703 118.292 344.703 C 118.197 344.703 113.452 343.17 113.452 325.071 Z" fill="url(#talkyhub-mascot)"/>
+    <circle cx="203.929" cy="194.493" r="20" fill="#fff"/>
+    <circle cx="323.929" cy="194.493" r="20" fill="#fff"/>
+    <path d="M 223.637 253.359 C 223.496 260.278 242.351 267.437 261.712 267.663 C 282.376 267.903 303.929 260.744 303.929 253.359 C 301.516 253.359 275.951 261.722 261.712 261.542 C 248.789 261.379 228.9 253.359 223.637 253.359 Z" fill="#fff"/>
+  </g>
+</svg>

@@ -796,23 +796,6 @@ main#main {
   max-width: 60ch;
 }
 
-.flagship-card__stack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  margin-top: 14px;
-}
-
-.flagship-card__stack span {
-  font-size: 0.78rem;
-  font-weight: 500;
-  padding: 4px 10px;
-  border-radius: 999px;
-  color: var(--ink);
-  background: var(--chip-bg);
-  border: 1px solid var(--line);
-}
-
 .flagship-card__more {
   display: inline-flex;
   align-items: center;
@@ -1703,6 +1686,35 @@ main#main {
 }
 
 .flagship-card .p2p-logo {
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   Product pages (TalkyHub, Sportgearhub)
+   ============================================================ */
+.product-hero {
+  text-align: center;
+}
+
+.product-hero .library-hero__actions {
+  justify-content: center;
+}
+
+.product-hero .page-hero__lead {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.product-logo {
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+}
+
+.product-hero .product-logo {
+  margin: 0 auto 6px;
+}
+
+.flagship-card .product-logo {
   flex-shrink: 0;
 }
 

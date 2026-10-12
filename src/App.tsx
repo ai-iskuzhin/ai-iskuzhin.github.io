@@ -10,6 +10,8 @@ import { Libraries } from './pages/Libraries'
 import { LibraryDetail } from './pages/LibraryDetail'
 import { Verificahub } from './pages/Verificahub'
 import { Pir2pir } from './pages/Pir2pir'
+import { Talkyhub } from './pages/Talkyhub'
+import { Sportgearhub } from './pages/Sportgearhub'
 import { Blog } from './pages/Blog'
 import { BlogPost } from './pages/BlogPost'
 import { NotFound } from './pages/NotFound'
@@ -27,6 +29,10 @@ function Page({ route }: { route: ReturnType<typeof matchRoute> }) {
       return <Verificahub lang={route.lang} />
     case 'pir2pir':
       return <Pir2pir lang={route.lang} />
+    case 'talkyhub':
+      return <Talkyhub lang={route.lang} />
+    case 'sportgearhub':
+      return <Sportgearhub lang={route.lang} />
     case 'blog':
       return <Blog lang={route.lang} />
     case 'post':

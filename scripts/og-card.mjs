@@ -57,8 +57,9 @@ function titleSize(text) {
  * @param {string[]} card.chips  short badges along the bottom
  * @param {[string, string]} card.accent  gradient stops
  * @param {string} card.site
+ * @param {string} [card.logo]  a product's square logo under public/ — shown instead of the portrait
  */
-function template({ eyebrow, title, subtitle, chips, accent, site }) {
+function template({ eyebrow, title, subtitle, chips, accent, site, logo }) {
   return h(
     'div',
     {
@@ -152,22 +153,42 @@ function template({ eyebrow, title, subtitle, chips, accent, site }) {
         site,
       ),
     ),
-    // Right column: the portrait.
+    // Right column: the product's own logo, or the portrait.
     h(
       'div',
       { style: { display: 'flex', position: 'relative' } },
-      h('img', {
-        src: portraitUri,
-        width: 380,
-        height: 380,
-        style: {
-          borderRadius: '28px',
-          border: `2px solid ${accent[0]}`,
-          objectFit: 'cover',
-        },
-      }),
+      logo
+        ? // The logos are self-contained rounded tiles, so no frame: just a glow in the accent.
+          h('img', {
+            src: logo,
+            width: 340,
+            height: 340,
+            style: { borderRadius: '76px', boxShadow: `0 24px 80px ${accent[0]}66` },
+          })
+        : h('img', {
+            src: portraitUri,
+            width: 380,
+            height: 380,
+            style: {
+              borderRadius: '28px',
+              border: `2px solid ${accent[0]}`,
+              objectFit: 'cover',
+            },
+          }),
     ),
   )
+}
+
+const logoCache = new Map()
+
+/** A file under public/ as a data URI, for a card's `logo`. */
+export async function publicImage(path) {
+  if (!logoCache.has(path)) {
+    const data = await readFile(join(root, 'public', path.replace(/^\//, '')))
+    const type = path.endsWith('.svg') ? 'image/svg+xml' : path.endsWith('.png') ? 'image/png' : 'image/jpeg'
+    logoCache.set(path, `data:${type};base64,${data.toString('base64')}`)
+  }
+  return logoCache.get(path)
 }
 
 /**

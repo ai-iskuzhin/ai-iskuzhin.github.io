@@ -1,7 +1,7 @@
 import type { Lang } from '../content/types'
 import { ui, t } from '../i18n'
 import { socials, profile, legal, prettyHref } from '../content/profile'
-import { librariesPath, verificahubPath, pir2pirPath, homePath } from '../routes'
+import { librariesPath, verificahubPath, pir2pirPath, talkyhubPath, sportgearhubPath, homePath } from '../routes'
 import { Link } from '../router'
 import { SocialIcon } from './SocialIcon'
 
@@ -17,9 +17,11 @@ export function Footer({ lang }: { lang: Lang }) {
 
         <nav className="site-footer__links" aria-label="Footer">
           <Link to={homePath(lang)}>{t(ui.nav.about, lang)}</Link>
-          <Link to={librariesPath(lang)}>{t(ui.nav.openSource, lang)}</Link>
           <Link to={verificahubPath(lang)}>VerificaHub</Link>
           <Link to={pir2pirPath(lang)}>{t({ ru: 'Пир2Пир', en: 'Pir2Pir' }, lang)}</Link>
+          <Link to={talkyhubPath(lang)}>TalkyHub</Link>
+          <Link to={sportgearhubPath(lang)}>Sportgearhub</Link>
+          <Link to={librariesPath(lang)}>{t(ui.nav.openSource, lang)}</Link>
         </nav>
 
         <div className="site-footer__social">

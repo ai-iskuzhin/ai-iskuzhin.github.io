@@ -1,5 +1,6 @@
 import type { L, Lang } from './types'
-import { verificahubPath, pir2pirPath } from '../routes'
+import { verificahubPath, pir2pirPath, talkyhubPath, sportgearhubPath } from '../routes'
+import { libraries } from './libraries'
 
 export const profile = {
   name: { ru: 'Айгиз Искужин', en: 'Aigiz Iskuzhin' } as L,
@@ -14,8 +15,8 @@ export const profile = {
     en: 'Fintech, payment integrations and open-source .NET SDKs',
   } as L,
   tagline: {
-    ru: 'Разрабатываю IT-продукты на .NET: платёжные интеграции, backend и инфраструктура. Четыре года коммерческого опыта и девять open-source SDK.',
-    en: 'I build IT products on .NET: payment integrations, backend and infrastructure. Four years of commercial experience and nine open-source SDKs.',
+    ru: `Разрабатываю IT-продукты на .NET: платёжные интеграции, backend и инфраструктура. Четыре года коммерческого опыта и ${libraries.length} open-source SDK.`,
+    en: `I build IT products on .NET: payment integrations, backend and infrastructure. Four years of commercial experience and ${libraries.length} open-source SDKs.`,
   } as L,
   location: { ru: 'Уфа, Россия · удалённо', en: 'Ufa, Russia · remote' } as L,
   about: {
@@ -159,7 +160,8 @@ export type Project = {
   title: L
   description: L
   notes?: L[]
-  stack: string[]
+  /** Left out for flagship products, which don't show their stack. */
+  stack?: string[]
   links: { label: string; href: string }[]
   /** A flagship product — featured in its own section and skipped by the ticker loop. */
   flagship?: boolean
@@ -190,7 +192,6 @@ export const projects: Project[] = [
         en: 'Channels: calls (flash-call), SMS, voice messages, messengers and social apps.',
       },
     ],
-    stack: ['ASP.NET Core', 'FastEndpoints', 'EF Core 10', 'PostgreSQL', 'Redis', 'Docker', 'React'],
     links: [
       { label: 'verificahub.ru', href: 'https://verificahub.ru' },
       { label: 'github.com/verificahub', href: 'https://github.com/verificahub' },
@@ -213,15 +214,60 @@ export const projects: Project[] = [
         ru: 'Веб-приложение, Telegram- и MAX-боты с единым аккаунтом. Вход по коду со школьной почты, без обмена контактами; чаты одноразовые.',
         en: 'Web app plus Telegram and MAX bots on one account. Code login via school email, no contact sharing, and chats are ephemeral.',
       },
-      {
-        ru: 'Построен на моём открытом SDK School21Net поверх официального API Школы 21.',
-        en: 'Built on my open-source School21Net SDK over the official School 21 API.',
-      },
     ],
-    stack: ['ASP.NET Core', 'PostgreSQL', 'School21Net', 'Telegram', 'MAX', 'React'],
     links: [
       { label: 'pir2pir.ru', href: 'https://pir2pir.ru' },
       { label: 't.me/pir2pirbot', href: 'https://t.me/pir2pirbot' },
+    ],
+  },
+  {
+    title: { ru: 'TalkyHub', en: 'TalkyHub' },
+    flagship: true,
+    detailPath: talkyhubPath,
+    description: {
+      ru: 'Омниканальная платформа поддержки: обращения из Telegram, VK, MAX и почты — в едином рабочем месте команды, по одной понятной цене.',
+      en: 'An omnichannel support platform: messages from Telegram, VK, MAX and email in one team workspace, for one clear price.',
+    },
+    notes: [
+      {
+        ru: 'VK и MAX подключены нативно, без сторонних коннекторов; разговоры из разных каналов сводятся в единый профиль клиента.',
+        en: 'VK and MAX are native, with no third-party connectors; conversations from different channels merge into one customer profile.',
+      },
+      {
+        ru: 'Автоназначение, SLA, заметки и макросы; обновления в реальном времени. API на событиях с подписанными webhook-ами.',
+        en: 'Auto-assignment, SLA, notes and macros, with live updates. An event-driven API with signed webhooks.',
+      },
+      {
+        ru: 'Вырос из собственной нужды: поддержка VerificaHub и Moonlume VPN в мессенджерах.',
+        en: 'It grew out of a need of my own: supporting VerificaHub and Moonlume VPN over messengers.',
+      },
+    ],
+    links: [
+      { label: 'talkyhub.ru', href: 'https://talkyhub.ru' },
+      { label: 'github.com/talkyhub', href: 'https://github.com/talkyhub' },
+    ],
+  },
+  {
+    title: { ru: 'Sportgearhub', en: 'Sportgearhub' },
+    flagship: true,
+    detailPath: sportgearhubPath,
+    description: {
+      ru: 'Маркетплейс проката спортивного снаряжения: велосипеды, SUP-доски, лыжи и походное снаряжение от проверенных прокатов — с бронью и оплатой онлайн.',
+      en: 'A sports gear rental marketplace: bikes, SUP boards, skis and hiking gear from verified rentals — booked and paid for online.',
+    },
+    notes: [
+      {
+        ru: 'Для клиентов — каталог по видам активности, цена и залог до оплаты, карта или СБП.',
+        en: 'For customers: a catalogue by activity, price and deposit shown before paying, card or SBP.',
+      },
+      {
+        ru: 'Для прокатов — кабинет с карточками, бронями, выдачей по QR и автоматическими выплатами; без абонентской платы.',
+        en: 'For rentals: a console with listings, bookings, QR handover and automatic payouts — no subscription fee.',
+      },
+    ],
+    links: [
+      { label: 'sportgearhub.ru', href: 'https://sportgearhub.ru' },
+      { label: 'github.com/sportgearhub', href: 'https://github.com/sportgearhub' },
     ],
   },
   {

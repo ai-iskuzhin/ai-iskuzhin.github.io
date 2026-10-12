@@ -100,7 +100,7 @@ function xml(value) {
 // Yandex reads <priority> as a crawl-ordering hint; neither engine treats it as
 // a ranking signal. hreflang lives only in the <head>: Google says one method is
 // enough, and Yandex no longer reads language alternates from the sitemap.
-const PRIORITY = { home: '1.0', libraries: '0.8', verificahub: '0.8', pir2pir: '0.8', library: '0.7', blog: '0.6', post: '0.6' }
+const PRIORITY = { home: '1.0', libraries: '0.8', verificahub: '0.8', pir2pir: '0.8', talkyhub: '0.8', sportgearhub: '0.8', library: '0.7', blog: '0.6', post: '0.6' }
 
 // A sitemap is an invitation to index, so a page that has handed its canonical to another site
 // does not belong in one: listing it asks a crawler to index a URL the same page tells it is not

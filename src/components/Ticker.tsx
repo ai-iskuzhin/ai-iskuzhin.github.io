@@ -3,7 +3,7 @@ import type { Lang } from '../content/types'
 import { t } from '../i18n'
 import { libraries } from '../content/libraries'
 import { projects, prettyHref } from '../content/profile'
-import { libraryPath, verificahubPath, pir2pirPath } from '../routes'
+import { libraryPath, verificahubPath, pir2pirPath, talkyhubPath, sportgearhubPath } from '../routes'
 import { Link } from '../router'
 
 const packageCount = libraries.reduce((total, lib) => total + 1 + (lib.nugetFamily?.length ?? 0), 0)
@@ -27,6 +27,8 @@ function buildItems(lang: Lang): Item[] {
   }
   items.push({ kind: 'link', label: 'VerificaHub', to: verificahubPath(lang), icon: '/logos/verificahub.svg' })
   items.push({ kind: 'link', label: t({ ru: 'Пир2Пир', en: 'Pir2Pir' }, lang), to: pir2pirPath(lang), icon: '/logos/pir2pir.svg' })
+  items.push({ kind: 'link', label: 'TalkyHub', to: talkyhubPath(lang), icon: '/logos/talkyhub.svg' })
+  items.push({ kind: 'link', label: 'Sportgearhub', to: sportgearhubPath(lang), icon: '/logos/sportgearhub.svg' })
 
   for (const project of projects) {
     // Flagship products are listed above already; don't repeat them here.

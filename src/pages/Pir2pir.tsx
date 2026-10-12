@@ -3,7 +3,6 @@ import { t } from '../i18n'
 import { ExternalIcon, GitHubIcon, CheckIcon } from '../components/Icons'
 import { Pir2pirLogo } from '../components/Pir2pirLogo'
 
-const stack = ['ASP.NET Core', 'PostgreSQL', 'School21Net', 'Telegram Bot', 'MAX', 'React', 'TypeScript']
 
 const steps: { title: L; body: L }[] = [
   {
@@ -147,12 +146,6 @@ export function Pir2pir({ lang }: { lang: Lang }) {
       </section>
 
       <section className="library-section">
-        <h2>{t({ ru: 'Технологии', en: 'Tech stack' }, lang)}</h2>
-        <ul className="tag-list tag-list--lg">
-          {stack.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
         <p className="prose prose--muted">
           {t(
             {
